@@ -1,0 +1,25 @@
+# Ignore large image files temporarily
+# You can host these on external services and update the HTML to use URLs
+
+# Large images (uncomment to ignore)
+# images/*.jpg
+# images/*.jpeg
+# images/*.png
+
+# Keep only essential small images
+# images/1*.png
+# images/2*.png
+# images/3*.png
+
+# Node modules and build files
+node_modules/
+dist/
+build/
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,13 @@
+# Temporary .gitignore content to reduce size
+# Add this to .gitignore to exclude large images temporarily
+
+images/*.jpg
+images/*.jpeg
+images/*.png
+
+# Keep only these essential small files
+!images/1.png
+!images/2.png
+!images/3.png
+!images/4.png
+!images/5.png
