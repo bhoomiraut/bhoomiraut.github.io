@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Bhoomi | Education</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* =====================
+       THEME VARIABLES
+    ====================== */
+
+    :root {
+      /* Light theme (default) - Made lighter */
+      --bg: #fafbfc;
+      --text: #1e293b;
+      --muted: #64748b;
+      --card: #ffffff;
+      --border: #e8edf3;
+      --accent: #3b82f6;
+    }
+
+    body.dark {
+      /* Dark theme - Made lighter */
+      --bg: radial-gradient(circle at top, #1a202c, #0f172a);
+      --text: #f1f5f9;
+      --muted: #cbd5e1;
+      --card: rgba(255,255,255,0.08);
+      --border: rgba(255,255,255,0.12);
+      --accent: #60a5fa;
+    }
+
+    /* =====================
+       RESET
+    ====================== */
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      transition: background 0.4s ease, color 0.4s ease;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background:
+        radial-gradient(600px at 15% 20%, rgba(37,99,235,0.15), transparent 60%),
+        radial-gradient(500px at 80% 30%, rgba(34,211,238,0.12), transparent 60%);
+    }
+
+    body.dark::before {
+      background:
+        radial-gradient(600px at 15% 20%, rgba(59,130,246,0.18), transparent 60%),
+        radial-gradient(500px at 80% 30%, rgba(96,165,250,0.15), transparent 60%);
+    }
+
+    /* Hide scrollbar for webkit browsers */
+    ::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Hide scrollbar for Firefox */
+    html {
+      scrollbar-width: none;
+    }
+
+    /* =====================
+       HEADER / NAV
+    ====================== */
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 8px 64px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav {
+      display: flex;
+      gap: 28px;
+    }
+
+    nav .nav-link {
+      background: none;
+      border: none;
+      font-size: 14px;
+      color: var(--muted);
+      cursor: pointer;
+      position: relative;
+      padding-bottom: 6px;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    nav .nav-link.active {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    nav .nav-link.active::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--accent);
+    }
+
+    nav .nav-link:hover {
+      color: var(--text);
+    }
+
+    .toggle {
+      position: relative;
+      width: 80px;
+      height: 28px;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      overflow: hidden;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
+      background: linear-gradient(135deg, #87CEEB 0%, #4169E1 100%);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 2px;
+      margin-left: 24px;
+    }
+
+    .toggle::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 50"><circle cx="15" cy="25" r="1" fill="white" opacity="0.4"/><circle cx="25" cy="15" r="0.8" fill="white" opacity="0.5"/><circle cx="35" cy="30" r="0.6" fill="white" opacity="0.6"/><circle cx="50" cy="20" r="0.8" fill="white" opacity="0.4"/><circle cx="65" cy="35" r="0.6" fill="white" opacity="0.5"/><circle cx="75" cy="25" r="1" fill="white" opacity="0.4"/><circle cx="85" cy="15" r="0.8" fill="white" opacity="0.5"/></svg>') no-repeat;
+      background-size: cover;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    body.dark .toggle::before {
+      opacity: 1;
+    }
+
+    .toggle-slider {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: white;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      left: 2px;
+      top: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .toggle-icon {
+      font-size: 10px;
+      transition: all 0.4s ease;
+    }
+
+    .toggle-text {
+      display: none;
+    }
+
+    /* Light mode state */
+    body:not(.dark) .toggle {
+      background: linear-gradient(135deg, #87CEEB 0%, #4169E1 100%);
+    }
+
+    body:not(.dark) .toggle-slider {
+      left: 2px;
+    }
+
+    body:not(.dark) .toggle-icon::before {
+      content: '☀️';
+    }
+
+    /* Dark mode state */
+    body.dark .toggle {
+      background: linear-gradient(135deg, #2c3e50 0%, #1a1a1a 100%);
+    }
+
+    body.dark .toggle-slider {
+      left: 54px;
+    }
+
+    body.dark .toggle-icon::before {
+      content: '🌙';
+    }
+
+    .toggle:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .toggle:active {
+      transform: scale(0.98);
+    }
+
+    /* =====================
+       SECTIONS
+    ====================== */
+
+    section {
+      display: block;
+      padding: 110px 64px;
+      animation: fadeUp 0.6s ease both;
+      overflow-y: auto;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding-top: 150px;
+      min-height: 100vh;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h1 {
+      font-size: 44px;
+      font-weight: 800;
+      line-height: 1.2;
+      max-width: 820px;
+    }
+
+    .lead {
+      margin-top: 28px;
+      max-width: 680px;
+      font-size: 16px;
+      line-height: 1.75;
+      color: var(--muted);
+    }
+
+    /* =====================
+       EDUCATION GRID
+    ====================== */
+
+    #education {
+      position: relative;
+      padding-top: 50px;
+      padding-bottom: 50px;
+    }
+
+    .education-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+      margin-top: 48px;
+      max-width: 1000px;
+    }
+
+    .education-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      position: relative;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .education-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+      transform: translateY(-2px);
+    }
+
+    .education-card .degree {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+
+    .education-card .institution {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    .education-card .specialization {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 12px;
+      font-style: normal;
+    }
+
+    .education-card .duration {
+      font-size: 13px;
+      color: var(--muted);
+      background: rgba(59, 130, 246, 0.1);
+      padding: 4px 12px;
+      border-radius: 20px;
+      display: inline-block;
+      margin-top: 8px;
+    }
+
+    /* =====================
+       FOOTER
+    ====================== */
+
+    .footer {
+      margin-top: 60px;
+      padding: 30px 0 20px 0;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      position: relative;
+      margin-left: -64px;
+      margin-right: -64px;
+      padding-left: 64px;
+      padding-right: 64px;
+    }
+
+    .footer p {
+      color: var(--muted);
+      font-size: 14px;
+      margin: 0;
+    }
+
+    /* =====================
+       NAVIGATION ARROWS
+    ====================== */
+
+    .nav-arrow {
+      position: fixed;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 60px;
+      background: rgba(37, 99, 235, 0.15);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(37, 99, 235, 0.3);
+      border-right: none;
+      border-radius: 30px 0 0 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 99;
+      opacity: 0.7;
+    }
+
+    .nav-arrow:hover {
+      opacity: 1;
+      transform: translateY(-50%) translateX(-5px);
+      background: rgba(37, 99, 235, 0.25);
+      border-color: rgba(37, 99, 235, 0.5);
+    }
+
+    .nav-arrow .arrow-icon {
+      font-size: 20px;
+      color: var(--accent);
+      animation: arrowPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes arrowPulse {
+      0%, 100% { transform: translateX(0); opacity: 0.7; }
+      50% { transform: translateX(3px); opacity: 1; }
+    }
+
+    body.dark .nav-arrow {
+      background: rgba(59, 130, 246, 0.2);
+      border-color: rgba(59, 130, 246, 0.4);
+    }
+
+    body.dark .nav-arrow:hover {
+      background: rgba(59, 130, 246, 0.3);
+      border-color: rgba(59, 130, 246, 0.6);
+    }
+
+    /* =====================
+       RESPONSIVE
+    ====================== */
+
+    @media (max-width: 900px) {
+      header {
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      section {
+        padding: 80px 28px;
+      }
+
+      h1 {
+        font-size: 36px;
+      }
+
+      .education-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .education-card {
+        padding: 20px;
+      }
+
+      .education-card .degree {
+        font-size: 16px;
+      }
+
+      .education-card .institution {
+        font-size: 15px;
+      }
+
+      .nav-arrow {
+        right: 0;
+        width: 35px;
+        height: 50px;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+<header>
+  <nav>
+    <a href="about.html" class="nav-link">About</a>
+    <a href="volunteer.html" class="nav-link">Volunteer</a>
+    <a href="achievements.html" class="nav-link">Achievements</a>
+    <a href="blog.html" class="nav-link">Blogs</a>
+    <a href="community.html" class="nav-link">Talks</a>
+    <a href="recommendations.html" class="nav-link">Recommendations</a>
+    <a href="media.html" class="nav-link">Media</a>
+    <a href="learning.html" class="nav-link">Projects</a>
+    <a href="education.html" class="nav-link active">Education</a>
+  </nav>
+
+  <div class="toggle" onclick="toggleTheme()">
+    <div class="toggle-slider">
+      <div class="toggle-icon"></div>
+    </div>
+    <div class="toggle-text"></div>
+  </div>
+</header>
+
+<!-- EDUCATION -->
+<section id="education">
+  <h1>Education</h1>
+  <p class="lead">My academic journey and educational background that shaped my expertise in technology and cloud computing.</p>
+
+  <div class="education-grid">
+
+    <div class="education-card">
+      <div class="institution">Sanjivani College of Engineering</div>
+      <div class="degree">An Autonomous Institute · SPPU</div>
+      <div class="specialization">MBA in Marketing</div>
+      <div class="duration">2025 - 2027</div>
+    </div>
+
+    <div class="education-card">
+      <div class="institution">Sanjivani College of Engineering</div>
+      <div class="degree">An Autonomous Institute · SPPU</div>
+      <div class="specialization">B.Tech in Computer Science Engineering</div>
+      <div class="duration">2021 - 2025</div>
+    </div>
+
+    <div class="education-card">
+      <div class="institution">Sanjivani College of Engineering</div>
+      <div class="degree">An Autonomous Institute · SPPU</div>
+      <div class="specialization">B.Tech Honors in Data Science</div>
+      <div class="duration">2023 - 2025</div>
+    </div>
+
+    <div class="education-card">
+      <div class="institution">Mumbai Educational Trust, MET League of Colleges</div>
+      <div class="degree">Savitribai Phule Pune University</div>
+      <div class="specialization">[Physics | Chemistry | Mathematics]</div>
+      <div class="duration">2019 - 2021</div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <p>© 2026 · Bhoomi Raut</p>
+  </div>
+
+  <!-- Navigation Arrows -->
+  <div class="nav-arrow nav-arrow-right" onclick="window.location.href='volunteer.html'">
+    <div class="arrow-icon">→</div>
+  </div>
+</section>
+
+<script>
+  // Load theme on page load
+  document.addEventListener('DOMContentLoaded', function() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      document.body.classList.add('dark');
+    }
+  });
+
+  function toggleTheme() {
+    document.body.classList.toggle("dark");
+    
+    // Save theme preference
+    if (document.body.classList.contains('dark')) {
+      localStorage.setItem('theme', 'dark');
+    } else {
+      localStorage.setItem('theme', 'light');
+    }
+  }
+</script>
+
+</body>
+</html>

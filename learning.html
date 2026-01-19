@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Bhoomi | Projects</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* =====================
+       THEME VARIABLES
+    ====================== */
+
+    :root {
+      /* Light theme (default) - Made lighter */
+      --bg: #fafbfc;
+      --text: #1e293b;
+      --muted: #64748b;
+      --card: #ffffff;
+      --border: #e8edf3;
+      --accent: #3b82f6;
+    }
+
+    body.dark {
+      /* Dark theme - Made lighter */
+      --bg: radial-gradient(circle at top, #1a202c, #0f172a);
+      --text: #f1f5f9;
+      --muted: #cbd5e1;
+      --card: rgba(255,255,255,0.08);
+      --border: rgba(255,255,255,0.12);
+      --accent: #60a5fa;
+    }
+
+    /* =====================
+       RESET
+    ====================== */
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      transition: background 0.4s ease, color 0.4s ease;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background:
+        radial-gradient(600px at 15% 20%, rgba(37,99,235,0.15), transparent 60%),
+        radial-gradient(500px at 80% 30%, rgba(34,211,238,0.12), transparent 60%);
+    }
+
+    body.dark::before {
+      background:
+        radial-gradient(600px at 15% 20%, rgba(59,130,246,0.18), transparent 60%),
+        radial-gradient(500px at 80% 30%, rgba(96,165,250,0.15), transparent 60%);
+    }
+
+    /* Hide scrollbar for webkit browsers */
+    ::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Hide scrollbar for Firefox */
+    html {
+      scrollbar-width: none;
+    }
+
+    /* =====================
+       HEADER / NAV
+    ====================== */
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 8px 64px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h2 {
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    nav {
+      display: flex;
+      gap: 28px;
+    }
+
+    nav .nav-link {
+      background: none;
+      border: none;
+      font-size: 14px;
+      color: var(--muted);
+      cursor: pointer;
+      position: relative;
+      padding-bottom: 6px;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    nav .nav-link.active {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    nav .nav-link.active::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--accent);
+    }
+
+    nav .nav-link:hover {
+      color: var(--text);
+    }
+
+    .toggle {
+      position: relative;
+      width: 80px;
+      height: 28px;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      overflow: hidden;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
+      background: linear-gradient(135deg, #87CEEB 0%, #4169E1 100%);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 2px;
+      margin-left: 24px;
+    }
+
+    .toggle::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 50"><circle cx="15" cy="25" r="1" fill="white" opacity="0.4"/><circle cx="25" cy="15" r="0.8" fill="white" opacity="0.5"/><circle cx="35" cy="30" r="0.6" fill="white" opacity="0.6"/><circle cx="50" cy="20" r="0.8" fill="white" opacity="0.4"/><circle cx="65" cy="35" r="0.6" fill="white" opacity="0.5"/><circle cx="75" cy="25" r="1" fill="white" opacity="0.4"/><circle cx="85" cy="15" r="0.8" fill="white" opacity="0.5"/></svg>') no-repeat;
+      background-size: cover;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    body.dark .toggle::before {
+      opacity: 1;
+    }
+
+    .toggle-slider {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: white;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      left: 2px;
+      top: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .toggle-icon {
+      font-size: 10px;
+      transition: all 0.4s ease;
+    }
+
+    .toggle-text {
+      display: none;
+    }
+
+    /* Light mode state */
+    body:not(.dark) .toggle {
+      background: linear-gradient(135deg, #87CEEB 0%, #4169E1 100%);
+    }
+
+    body:not(.dark) .toggle-slider {
+      left: 2px;
+    }
+
+    body:not(.dark) .toggle-icon::before {
+      content: '☀️';
+    }
+
+    /* Dark mode state */
+    body.dark .toggle {
+      background: linear-gradient(135deg, #2c3e50 0%, #1a1a1a 100%);
+    }
+
+    body.dark .toggle-slider {
+      left: 54px;
+    }
+
+    body.dark .toggle-icon::before {
+      content: '🌙';
+    }
+
+    .toggle:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .toggle:active {
+      transform: scale(0.98);
+    }
+
+    /* =====================
+       SECTIONS
+    ====================== */
+
+    section {
+      display: block;
+      padding: 110px 64px;
+      animation: fadeUp 0.6s ease both;
+      overflow-y: auto;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding-top: 150px;
+      min-height: 100vh;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h1 {
+      font-size: 44px;
+      font-weight: 800;
+      line-height: 1.2;
+      max-width: 820px;
+    }
+
+    .lead {
+      margin-top: 28px;
+      max-width: 680px;
+      font-size: 16px;
+      line-height: 1.75;
+      color: var(--muted);
+    }
+
+    /* =====================
+       CONTENT CONTAINERS
+    ====================== */
+
+    .content-container {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 48px;
+      margin-top: 48px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+    }
+
+    body.dark .content-container {
+      backdrop-filter: blur(12px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    }
+
+    .content-container h2 {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 24px;
+      color: var(--text);
+    }
+
+    .content-container .lead {
+      margin-top: 0;
+      margin-bottom: 24px;
+    }
+
+    .content-container .lead:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Learning - Stacked timeline layout */
+    #learning {
+      position: relative;
+      padding-top: 50px;
+      padding-bottom: 50px;
+    }
+    #learning .timeline {
+      position: relative;
+      margin-top: 48px;
+    }
+
+    #learning .timeline::before {
+      content: '';
+      position: absolute;
+      left: 24px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--border);
+    }
+
+    #learning .timeline-item {
+      position: relative;
+      margin-bottom: 48px;
+      padding-left: 72px;
+    }
+
+    #learning .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: 16px;
+      top: 24px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 4px solid var(--bg);
+    }
+
+    #learning .timeline-item .content-container {
+      margin-top: 0;
+      border-radius: 20px;
+      padding: 40px;
+    }
+
+    /* =====================
+       NAVIGATION ARROWS
+    ====================== */
+
+    .nav-arrow {
+      position: fixed;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 60px;
+      background: rgba(37, 99, 235, 0.15);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(37, 99, 235, 0.3);
+      border-right: none;
+      border-radius: 30px 0 0 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 99;
+      opacity: 0.7;
+    }
+
+    .nav-arrow:hover {
+      opacity: 1;
+      transform: translateY(-50%) translateX(-5px);
+      background: rgba(37, 99, 235, 0.25);
+      border-color: rgba(37, 99, 235, 0.5);
+    }
+
+    .nav-arrow .arrow-icon {
+      font-size: 20px;
+      color: var(--accent);
+      animation: arrowPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes arrowPulse {
+      0%, 100% { transform: translateX(0); opacity: 0.7; }
+      50% { transform: translateX(3px); opacity: 1; }
+    }
+
+    body.dark .nav-arrow {
+      background: rgba(59, 130, 246, 0.2);
+      border-color: rgba(59, 130, 246, 0.4);
+    }
+
+    body.dark .nav-arrow:hover {
+      background: rgba(59, 130, 246, 0.3);
+      border-color: rgba(59, 130, 246, 0.6);
+    }
+
+    /* =====================
+       FOOTER
+    ====================== */
+
+    .footer {
+      margin-top: 60px;
+      padding: 30px 0 20px 0;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      position: relative;
+      margin-left: -64px;
+      margin-right: -64px;
+      padding-left: 64px;
+      padding-right: 64px;
+    }
+
+    .footer p {
+      color: var(--muted);
+      font-size: 14px;
+      margin: 0;
+    }
+
+    /* =====================
+       RESPONSIVE
+    ====================== */
+
+    @media (max-width: 900px) {
+      header {
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      section {
+        padding: 80px 28px;
+      }
+
+      h1 {
+        font-size: 36px;
+      }
+
+      #learning .timeline-item {
+        padding-left: 48px;
+      }
+
+      #learning .timeline::before {
+        left: 16px;
+      }
+
+      #learning .timeline-item::before {
+        left: 8px;
+      }
+
+      .nav-arrow {
+        right: 0;
+        width: 35px;
+        height: 50px;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+<header>
+  <nav>
+    <a href="about.html" class="nav-link">About</a>
+    <a href="volunteer.html" class="nav-link">Volunteer</a>
+    <a href="achievements.html" class="nav-link">Achievements</a>
+    <a href="blog.html" class="nav-link">Blogs</a>
+    <a href="community.html" class="nav-link">Talks</a>
+    <a href="recommendations.html" class="nav-link">Recommendations</a>
+    <a href="media.html" class="nav-link">Media</a>
+    <a href="learning.html" class="nav-link active">Projects</a>
+    <a href="education.html" class="nav-link">Education</a>
+  </nav>
+
+  <div class="toggle" onclick="toggleTheme()">
+    <div class="toggle-slider">
+      <div class="toggle-icon"></div>
+    </div>
+    <div class="toggle-text"></div>
+  </div>
+</header>
+
+<!-- LEARNING -->
+<section id="learning">
+  <h1>Teaching as Learning</h1>
+
+  <!-- Project Contributions Section -->
+  <div style="margin-top: 48px;">
+    <h2 style="font-size: 32px; font-weight: 700; margin-bottom: 32px; color: var(--text);">Project Contributions</h2>
+    
+    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-bottom: 60px;">
+      <div class="content-container" style="margin-top: 0;">
+        <a href="https://github.com/dr-rahulgaikwad/dr-rahul-gaikwad.github.io" target="_blank" style="text-decoration: none; color: inherit;">
+          <h3 style="font-size: 20px; font-weight: 600; margin-bottom: 8px; color: var(--text); cursor: pointer; transition: color 0.3s ease;">Personal Portfolio Site</h3>
+        </a>
+        <a href="https://github.com/dr-rahulgaikwad/dr-rahul-gaikwad.github.io" target="_blank" style="text-decoration: none;">
+          <p style="font-size: 14px; color: var(--accent); margin-bottom: 16px; cursor: pointer; font-weight: 500; transition: opacity 0.3s ease;">View GitHub Profile →</p>
+        </a>
+        <p class="lead" style="margin-bottom: 0;">
+          Contributing to open source projects and community-driven initiatives that help developers learn cloud technologies and best practices. Focus on creating accessible resources and documentation.
+        </p>
+      </div>
+      
+      <div class="content-container" style="margin-top: 0;">
+        <a href="https://github.com/dr-rahulgaikwad/blogs" target="_blank" style="text-decoration: none; color: inherit;">
+          <h3 style="font-size: 20px; font-weight: 600; margin-bottom: 8px; color: var(--text); cursor: pointer; transition: color 0.3s ease;">Technical Blog Site</h3>
+        </a>
+        <a href="https://github.com/dr-rahulgaikwad/blogs" target="_blank" style="text-decoration: none;">
+          <p style="font-size: 14px; color: var(--accent); margin-bottom: 16px; cursor: pointer; font-weight: 500; transition: opacity 0.3s ease;">View Udemy Profile →</p>
+        </a>
+        <p class="lead" style="margin-bottom: 0;">
+          Developing educational content, tutorials, and practice materials that bridge the gap between theoretical knowledge and practical implementation in cloud computing.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- AWS Practice Tests Course -->
+  <div style="margin-bottom: 60px;">
+    <div class="content-container" style="margin-top: 0;">
+      <div style="display: flex; gap: 30px; align-items: flex-start;">
+        <div style="flex-shrink: 0;">
+          <img src="images\AWS Certified Cloud Practitioner Test Series.png" alt="AWS Cloud Practitioner Course" style="width: 280px; height: 200px; object-fit: cover; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+        </div>
+        <div style="flex: 1;">
+          <h2 style="font-size: 28px; font-weight: 700; margin-bottom: 16px; color: var(--text);">AWS Certified Cloud Practitioner Practice Tests</h2>
+          <p class="lead" style="margin-bottom: 16px;">
+            Created a comprehensive practice test series for AWS Certified Cloud Practitioner (CLF-C02) certification. This Udemy course provides extensive practice questions designed to help candidates prepare effectively for the certification exam, covering all key domains and concepts required for success.
+          </p>
+          <p class="lead">
+            <a href="https://www.udemy.com/course/aws-certified-cloud-practitioner-clf-c02-practice-tests-bhoomi/" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 600;">View Course on Udemy →</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>© 2026 · Bhoomi Raut</p>
+  </div>
+
+  <!-- Navigation Arrows -->
+  <div class="nav-arrow nav-arrow-right" onclick="window.location.href='education.html'">
+    <div class="arrow-icon">→</div>
+  </div>
+</section>
+
+<script>
+  // Load theme on page load
+  document.addEventListener('DOMContentLoaded', function() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      document.body.classList.add('dark');
+    }
+  });
+
+  function toggleTheme() {
+    document.body.classList.toggle("dark");
+    
+    // Save theme preference
+    if (document.body.classList.contains('dark')) {
+      localStorage.setItem('theme', 'dark');
+    } else {
+      localStorage.setItem('theme', 'light');
+    }
+  }
+</script>
+
+</body>
+</html>
