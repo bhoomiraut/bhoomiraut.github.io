@@ -1,0 +1,1530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Bhoomi | Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* =====================
+       THEME VARIABLES
+    ====================== */
+
+    :root {
+      /* Light theme (default) - Made lighter */
+      --bg: #fafbfc;
+      --text: #1e293b;
+      --muted: #64748b;
+      --card: #ffffff;
+      --border: #e8edf3;
+      --accent: #3b82f6;
+    }
+
+    body.dark {
+      /* Dark theme - Made lighter */
+      --bg: radial-gradient(circle at top, #1a202c, #0f172a);
+      --text: #f1f5f9;
+      --muted: #cbd5e1;
+      --card: rgba(255,255,255,0.08);
+      --border: rgba(255,255,255,0.12);
+      --accent: #60a5fa;
+    }
+
+    /* =====================
+       RESET
+    ====================== */
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      transition: background 0.4s ease, color 0.4s ease;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background:
+        radial-gradient(600px at 15% 20%, rgba(37,99,235,0.15), transparent 60%),
+        radial-gradient(500px at 80% 30%, rgba(34,211,238,0.12), transparent 60%);
+    }
+
+    body.dark::before {
+      background:
+        radial-gradient(600px at 15% 20%, rgba(59,130,246,0.18), transparent 60%),
+        radial-gradient(500px at 80% 30%, rgba(96,165,250,0.15), transparent 60%);
+    }
+
+    /* Hide scrollbar for webkit browsers */
+    ::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Hide scrollbar for Firefox */
+    html {
+      scrollbar-width: none;
+    }
+
+    /* =====================
+       HEADER / NAV
+    ====================== */
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 8px 64px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h2 {
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    nav {
+      display: flex;
+      gap: 28px;
+    }
+
+    nav .nav-link {
+      background: none;
+      border: none;
+      font-size: 14px;
+      color: var(--muted);
+      cursor: pointer;
+      position: relative;
+      padding-bottom: 6px;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    nav .nav-link.active {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    nav .nav-link.active::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--accent);
+    }
+
+    nav .nav-link:hover {
+      color: var(--text);
+    }
+
+    .toggle {
+      position: relative;
+      width: 80px;
+      height: 28px;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      overflow: hidden;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
+      background: linear-gradient(135deg, #87CEEB 0%, #4169E1 100%);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 2px;
+      margin-left: 24px;
+    }
+
+    .toggle::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 50"><circle cx="15" cy="25" r="1" fill="white" opacity="0.4"/><circle cx="25" cy="15" r="0.8" fill="white" opacity="0.5"/><circle cx="35" cy="30" r="0.6" fill="white" opacity="0.6"/><circle cx="50" cy="20" r="0.8" fill="white" opacity="0.4"/><circle cx="65" cy="35" r="0.6" fill="white" opacity="0.5"/><circle cx="75" cy="25" r="1" fill="white" opacity="0.4"/><circle cx="85" cy="15" r="0.8" fill="white" opacity="0.5"/></svg>') no-repeat;
+      background-size: cover;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    body.dark .toggle::before {
+      opacity: 1;
+    }
+
+    .toggle-slider {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: white;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      left: 2px;
+      top: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .toggle-icon {
+      font-size: 10px;
+      transition: all 0.4s ease;
+    }
+
+    .toggle-text {
+      display: none;
+    }
+
+    /* Light mode state */
+    body:not(.dark) .toggle {
+      background: linear-gradient(135deg, #87CEEB 0%, #4169E1 100%);
+    }
+
+    body:not(.dark) .toggle-slider {
+      left: 2px;
+    }
+
+    body:not(.dark) .toggle-icon::before {
+      content: '☀️';
+    }
+
+    /* Dark mode state */
+    body.dark .toggle {
+      background: linear-gradient(135deg, #2c3e50 0%, #1a1a1a 100%);
+    }
+
+    body.dark .toggle-slider {
+      left: 54px;
+    }
+
+    body.dark .toggle-icon::before {
+      content: '🌙';
+    }
+
+    .toggle:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .toggle:active {
+      transform: scale(0.98);
+    }
+
+    /* =====================
+       SECTIONS
+    ====================== */
+
+    section {
+      display: none;
+      padding: 110px 50px;
+      animation: fadeUp 0.3s ease both;
+      overflow-y: auto;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding-top: 10px;
+      min-height: 100vh;
+    }
+
+    section.active {
+      display: block;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h1 {
+      font-size: 44px;
+      font-weight: 800;
+      line-height: 1.2;
+      max-width: 820px;
+    }
+
+    .subtitle {
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--accent);
+      line-height: 1.4;
+      display: block;
+      margin-top: 12px;
+    }
+
+    .lead {
+      margin-top: 28px;
+      max-width: 680px;
+      font-size: 16px;
+      line-height: 1.75;
+      color: var(--muted);
+    }
+
+    /* =====================
+       HERO BACKGROUND FEEL
+    ====================== */
+
+    .hero-bg, body::before {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background:
+        radial-gradient(600px at 15% 20%, rgba(37,99,235,0.15), transparent 50%),
+        radial-gradient(500px at 80% 30%, rgba(34,211,238,0.12), transparent 50%);
+    }
+
+    body.dark .hero-bg, body.dark::before {
+      background:
+        radial-gradient(600px at 15% 20%, rgba(59,130,246,0.18), transparent 70%),
+        radial-gradient(500px at 80% 30%, rgba(96,165,250,0.15), transparent 70%);
+    }
+
+    /* =====================
+       HERO PHOTO
+    ====================== */
+
+    .hero-photo {
+      margin-top: 60px;
+      max-width: 360px;
+    }
+
+    .hero-photo img {
+      width: 100%;
+      border-radius: 22px;
+      filter: grayscale(80%) contrast(1.05);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+    }
+
+    body.dark .hero-photo img {
+      filter: grayscale(60%) contrast(1.1);
+    }
+
+    /* =====================
+       CONTENT CONTAINERS
+    ====================== */
+
+    .content-container {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 30px 5px 20px 60px;
+      margin-top: 30px;
+      margin-bottom: 0px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+      max-width: 800px;
+    }
+
+    body.dark .content-container {
+      backdrop-filter: blur(12px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    }
+
+    .content-container h2 {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 24px;
+      color: var(--text);
+    }
+
+    .content-container .lead {
+      margin-top: 0;
+      margin-bottom: 24px;
+    }
+
+    .content-container .lead:last-child {
+      margin-bottom: 0;
+    }
+
+    /* =====================
+       GRID / CARDS
+    ====================== */
+
+    .grid {
+      margin-top: 60px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 36px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 34px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+    }
+
+    body.dark .card {
+      backdrop-filter: blur(8px);
+    }
+
+    .card h3 {
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+
+    .card p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* =====================
+       FOCUS STATEMENT
+    ====================== */
+
+    .focus {
+      margin-top: 70px;
+      padding: 40px;
+      max-width: 560px;
+      border-left: 3px solid var(--accent);
+      background: var(--card);
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    /* =====================
+       DIVIDER
+    ====================== */
+
+    .divider {
+      margin: 20px auto 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    .divider span {
+      width: 90px;
+      height: 3px;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        var(--accent),
+        transparent
+      );
+      opacity: 0.6;
+    }
+
+    /* =====================
+       SECTION-SPECIFIC LAYOUTS
+    ====================== */
+
+    /* About - Hero layout with photo */
+    #about {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    #about .about-content {
+      display: flex;
+      gap: 60px;
+      align-items: flex-start;
+      margin-top: 24px;
+    }
+
+    #about .text-content {
+      flex: 1;
+    }
+
+    #about .photo-wall {
+      width: 200px;
+      height: 100vh;
+      position: fixed;
+      left: 0;
+      top: 0;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+      background: var(--border);
+      padding: 2px;
+      z-index: 5;
+    }
+
+    #about .main-content {
+      margin-left: 220px;
+    }
+
+    #about .photo-wall {
+  width: 380px;
+  min-height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 70px;
+  gap: 1px;
+  background: var(--bg);
+  padding: 0;
+  z-index: 1;
+  overflow-y: auto;
+}
+
+    #about .main-content {
+      margin-left: 380px;
+      padding-left: 80px;
+      padding-top: 50px;
+      padding-bottom: 30px;
+      z-index: 10;
+      position: relative;
+      min-height: 100vh;
+    }
+
+    #about .photo-block {
+      background: var(--card);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: transform 0.6s ease;
+      border: 1px solid var(--border);
+      position: relative;
+    }
+
+    #about .photo-block.square {
+      grid-column: span 1;
+      grid-row: span 2;
+    }
+
+    #about .photo-block.wide {
+      grid-column: span 4;
+      grid-row: span 2;
+    }
+
+    #about .photo-block.tall {
+      grid-column: span 2;
+      grid-row: span 3;
+    }
+
+    #about .photo-block.flip {
+      animation: flipBlock 12s infinite;
+    }
+
+    #about .photo-block.flip:nth-child(3n) {
+      animation-delay: 4s;
+    }
+
+    #about .photo-block.flip:nth-child(5n) {
+      animation-delay: 8s;
+    }
+
+    #about .photo-block img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+t     #about .focus-arrow {
+      position: absolute;
+      left: 290px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 2px;
+      background: var(--accent);
+      opacity: 0.3;
+      animation: gentlePoint 4s ease-in-out infinite;
+    }
+
+    #about .focus-arrow::after {
+      content: '';
+      position: absolute;
+      right: -8px;
+      top: -3px;
+      width: 0;
+      height: 0;
+      border-left: 8px solid var(--accent);
+      border-top: 4px solid transparent;
+      border-bottom: 4px solid transparent;
+      opacity: 0.3;
+    }
+
+    @keyframes gentlePoint {
+      0%, 100% { transform: translateY(-50%) translateX(0); opacity: 0.2; }
+      50% { transform: translateY(-50%) translateX(8px); opacity: 0.4; }
+    }
+
+    /* Community - Experience cards with mic interaction */
+    #community {
+      position: relative;
+      padding-top: 50px;
+      padding-bottom: 50px;
+    }
+    #community .experience-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 48px;
+    }
+
+    .experience-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      position: relative;
+      transition: all 0.3s ease;
+      height: 120px;
+      overflow: hidden;
+    }
+
+    .experience-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    }
+
+    .experience-card::after {
+      content: 'click on mic to listen';
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 9px;
+      color: var(--muted);
+      opacity: 0.7;
+    }
+
+    .experience-card.expanded {
+      height: auto;
+      min-height: 200px;
+    }
+
+    .experience-card h3 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .mic-button {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: none;
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+
+    .mic-button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 20px rgba(37,99,235,0.4);
+    }
+
+    .mic-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.8);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .mic-large {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 80px;
+      color: white;
+      animation: musicRhythm 0.8s infinite alternate;
+      position: relative;
+    }
+
+    .audio-meters {
+      position: absolute;
+      display: flex;
+      gap: 4px;
+      bottom: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .meter-bar {
+      width: 6px;
+      background: var(--accent);
+      border-radius: 3px;
+      animation: meterPulse 0.3s infinite alternate;
+    }
+
+    .meter-bar:nth-child(1) { height: 20px; animation-delay: 0s; }
+    .meter-bar:nth-child(2) { height: 35px; animation-delay: 0.1s; }
+    .meter-bar:nth-child(3) { height: 50px; animation-delay: 0.2s; }
+    .meter-bar:nth-child(4) { height: 65px; animation-delay: 0.3s; }
+    .meter-bar:nth-child(5) { height: 50px; animation-delay: 0.4s; }
+    .meter-bar:nth-child(6) { height: 35px; animation-delay: 0.5s; }
+    .meter-bar:nth-child(7) { height: 20px; animation-delay: 0.6s; }
+
+    @keyframes meterPulse {
+      0% { opacity: 0.3; transform: scaleY(0.5); }
+      100% { opacity: 1; transform: scaleY(1); }
+    }
+
+    @keyframes musicRhythm {
+      0% { transform: scale(1); box-shadow: 0 0 50px rgba(37,99,235,0.5); }
+      100% { transform: scale(1.1); box-shadow: 0 0 80px rgba(37,99,235,0.8); }
+    }
+
+    .social-bubbles {
+      display: flex;
+      flex-direction: row;
+      gap: 24px;
+      margin-top: 32px;
+      justify-content: flex-start;
+    }
+
+    .bubble {
+      width: 120px;
+      height: 50px;
+      border-radius: 25px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(37,99,235,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      color: var(--text);
+      backdrop-filter: blur(12px);
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      text-align: center;
+      line-height: 1.2;
+    }
+
+    .bubble:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(37,99,235,0.15);
+    }
+
+    body.dark .bubble {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(59,130,246,0.3);
+    }
+
+    body.dark .bubble:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: var(--accent);
+      box-shadow: 0 8px 25px rgba(59,130,246,0.2);
+    }
+
+    .rhythm-rings {
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      border: 2px solid var(--accent);
+      border-radius: 50%;
+      animation: ripple 2s infinite;
+    }
+
+    .rhythm-rings:nth-child(2) {
+      animation-delay: 0.5s;
+      width: 350px;
+      height: 350px;
+    }
+
+    .rhythm-rings:nth-child(3) {
+      animation-delay: 1s;
+      width: 400px;
+      height: 400px;
+    }
+
+    @keyframes ripple {
+      0% { opacity: 1; transform: scale(0.5); }
+      100% { opacity: 0; transform: scale(1.2); }
+    }
+
+    .experience-card .preview {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .experience-card .full-content {
+      display: none;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+      margin-top: 16px;
+    }
+
+    .experience-card.expanded .preview {
+      display: none;
+    }
+
+    .experience-card.expanded .full-content {
+      display: block;
+    }
+
+    /* Writing - Mixed layout with central grid */
+    #writing {
+      position: relative;
+      padding-top: 50px;
+      padding-bottom: 50px;
+    }
+    #writing .content-container {
+      border-radius: 32px;
+      padding: 56px;
+      text-align: center;
+    }
+
+    #writing .grid {
+      margin: 64px 0;
+    }
+
+    /* Learning - Stacked timeline layout */
+    #learning {
+      position: relative;
+      padding-top: 50px;
+      padding-bottom: 50px;
+    }
+    #learning .timeline {
+      position: relative;
+      margin-top: 48px;
+    }
+
+    #learning .timeline::before {
+      content: '';
+      position: absolute;
+      left: 24px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--border);
+    }
+
+    #learning .timeline-item {
+      position: relative;
+      margin-bottom: 48px;
+      padding-left: 72px;
+    }
+
+    #learning .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: 16px;
+      top: 24px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 4px solid var(--bg);
+    }
+
+    #learning .timeline-item .content-container {
+      margin-top: 0;
+      border-radius: 20px;
+      padding: 40px;
+    }
+
+    /* =====================
+       HOVERING INFO CONTAINER
+    ====================== */
+
+    .hover-info-container {
+      position: fixed;
+      top: 50%;
+      right: 30px;
+      transform: translateY(-50%);
+      background: rgba(37, 99, 235, 0.1);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(37, 99, 235, 0.2);
+      border-radius: 16px;
+      padding: 20px;
+      max-width: 300px;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.4s ease;
+      z-index: 100;
+    }
+
+    .hover-info-container::before {
+      content: "ℹ️";
+      position: absolute;
+      right: -15px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 30px;
+      height: 30px;
+      background: rgba(37, 99, 235, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .hover-info-container:hover {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(-50%) translateX(-10px);
+    }
+
+    .hover-info-content p {
+      font-size: 12px;
+      line-height: 1.4;
+      color: var(--text);
+      margin: 0;
+    }
+
+    body.dark .hover-info-container {
+      background: rgba(59, 130, 246, 0.15);
+      border-color: rgba(59, 130, 246, 0.3);
+    }
+
+    /* =====================
+       NAVIGATION ARROWS
+    ====================== */
+
+    .nav-arrow {
+      position: fixed;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 60px;
+      background: rgba(37, 99, 235, 0.15);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(37, 99, 235, 0.3);
+      border-right: none;
+      border-radius: 30px 0 0 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 99;
+      opacity: 0.7;
+    }
+
+    .nav-arrow:hover {
+      opacity: 1;
+      transform: translateY(-50%) translateX(-5px);
+      background: rgba(37, 99, 235, 0.25);
+      border-color: rgba(37, 99, 235, 0.5);
+    }
+
+    .nav-arrow .arrow-icon {
+      font-size: 20px;
+      color: var(--accent);
+      animation: arrowPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes arrowPulse {
+      0%, 100% { transform: translateX(0); opacity: 0.7; }
+      50% { transform: translateX(3px); opacity: 1; }
+    }
+
+    body.dark .nav-arrow {
+      background: rgba(59, 130, 246, 0.2);
+      border-color: rgba(59, 130, 246, 0.4);
+    }
+
+    body.dark .nav-arrow:hover {
+      background: rgba(59, 130, 246, 0.3);
+      border-color: rgba(59, 130, 246, 0.6);
+    }
+
+    /* =====================
+       DIGITAL BADGES TRANSITION SCREEN
+    ====================== */
+
+    .badges-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .badges-overlay.show {
+      opacity: 1;
+    }
+
+    .badges-container {
+      position: relative;
+      width: 800px;
+      height: 600px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .glowing-orbit {
+      position: absolute;
+      border: 2px solid rgba(59, 130, 246, 0.3);
+      border-radius: 50%;
+      animation: rotate 20s linear infinite;
+    }
+
+    .orbit-1 {
+      width: 350px;
+      height: 350px;
+      animation-duration: 25s;
+    }
+
+    .orbit-2 {
+      width: 450px;
+      height: 450px;
+      animation-duration: 35s;
+      animation-direction: reverse;
+    }
+
+    .orbit-3 {
+      width: 550px;
+      height: 550px;
+      animation-duration: 45s;
+    }
+
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .floating-badge {
+      position: absolute;
+      width: 90px;
+      height: 90px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(59, 130, 246, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .floating-badge img {
+      width: 70px;
+      height: 70px;
+      object-fit: contain;
+    }
+
+    .badge-1 {
+      top: 15%;
+      left: 25%;
+      animation-delay: 0s;
+    }
+
+    .badge-2 {
+      top: 15%;
+      right: 25%;
+      animation-delay: 2s;
+    }
+
+    .badge-3 {
+      bottom: 15%;
+      left: 25%;
+      animation-delay: 4s;
+    }
+
+    .badge-4 {
+      bottom: 15%;
+      right: 25%;
+      animation-delay: 1s;
+    }
+
+    .badge-5 {
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation-delay: 3s;
+      z-index: 5;
+    }
+
+    @keyframes float {
+      0%, 100% { 
+        transform: translateY(0px) scale(1);
+        opacity: 0.8;
+      }
+      50% { 
+        transform: translateY(-20px) scale(1.05);
+        opacity: 1;
+      }
+    }
+
+    .badges-title {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 28px;
+      font-weight: 700;
+      text-align: center;
+      z-index: 10;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      animation: titleGlow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes titleGlow {
+      from { 
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      }
+      to { 
+        text-shadow: 0 2px 20px rgba(59, 130, 246, 0.5);
+      }
+    }
+
+    /* =====================
+       FOOTER
+    ====================== */
+
+    .footer {
+      margin-top: 40px;
+      padding: 20px 0 15px 0;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      position: relative;
+      margin-left: -64px;
+      margin-right: -64px;
+      padding-left: 64px;
+      padding-right: 64px;
+      background: var(--bg);
+      z-index: 10;
+    }
+
+    .footer p {
+      color: var(--muted);
+      font-size: 14px;
+      margin: 0;
+    }
+
+    /* =====================
+       RESPONSIVE
+    ====================== */
+
+    @media (max-width: 900px) {
+      header {
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      section {
+        padding: 80px 28px;
+      }
+
+      h1 {
+        font-size: 36px;
+      }
+
+      .subtitle {
+        font-size: 14px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      #community .experience-grid {
+        grid-template-columns: 1fr;
+      }
+
+      #learning .timeline-item {
+        padding-left: 48px;
+      }
+
+      #learning .timeline::before {
+        left: 16px;
+      }
+
+      #learning .timeline-item::before {
+        left: 8px;
+      }
+
+      .hover-info-container {
+        display: none;
+      }
+
+      .nav-arrow {
+        right: 0;
+        width: 35px;
+        height: 50px;
+      }
+
+      #about .main-content {
+        margin-left: 0;
+        padding-left: 20px;
+      }
+
+      #about .photo-wall {
+        display: none;
+      }
+
+      #about .floating-blocks {
+        display: none;
+      }
+
+      #about .main-content {
+        margin-left: 0;
+      }
+
+      #about .photo-wall {
+        display: none;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+<header>
+  <nav>
+    <a href="about.html" class="nav-link active">About</a>
+    <a href="volunteer.html" class="nav-link">Volunteer</a>
+    <a href="achievements.html" class="nav-link">Achievements</a>
+    <a href="blog.html" class="nav-link">Blogs</a>
+    <a href="community.html" class="nav-link">Talks</a>
+    <a href="recommendations.html" class="nav-link">Recommendations</a>
+    <a href="media.html" class="nav-link">Media</a>
+    <a href="learning.html" class="nav-link">Projects</a>
+    <a href="education.html" class="nav-link">Education</a>
+  </nav>
+
+  <div class="toggle" onclick="toggleTheme()">
+    <div class="toggle-slider">
+      <div class="toggle-icon"></div>
+    </div>
+    <div class="toggle-text"></div>
+  </div>
+</header>
+
+<!-- ABOUT -->
+<section id="about" class="active">
+  <div class="photo-wall">
+    <!-- Pattern: landscape → 3 squares → landscape → 2 vertical → repeating -->
+    
+    <!-- First landscape -->
+    <div class="photo-block wide"><img src="images\speakers cloud discovery photo.jpg" alt="Tech Conference"></div>
+    
+    <!-- 3 squares -->
+    <div class="photo-block square"><img src="images\amazon office.jpg" alt="Speaking Engagement"></div>
+    <div class="photo-block square"><img src="images\tedx.png" alt="Networking Event"></div>
+    <div class="photo-block square"><img src="images\ah speaking photo.png" alt="Community Event"></div>
+    
+    <!-- Second landscape -->
+    <div class="photo-block wide"><img src="images\ahmedabad acd.png" alt="Panel Discussion"></div>
+    
+    <!-- 2 vertical -->
+    <div class="photo-block tall"><img src="images/rs ug pune photo.jpg" alt="Professional Event"></div>
+    <div class="photo-block tall"><img src="images\arsh grp photo.jpg" alt="Presentation"></div>
+    
+    <!-- Third landscape -->
+    <div class="photo-block wide"><img src="images\mum luise photo.png" alt="Workshop Session"></div>
+    
+    <!-- 3 squares -->
+    <div class="photo-block square"><img src="images\hackathon.png" alt="Workshop"></div>
+    <div class="photo-block square"><img src="images\ah speaking photo.png" alt="Professional Meetup"></div>
+    <div class="photo-block square"><img src="images\GD winner.png" alt="Tech Talk"></div>
+    
+    <!-- Fourth landscape -->
+    <div class="photo-block wide"><img src="images\womens day ug pune.jpg" alt="Community Gathering"></div>
+    
+    <!-- 2 vertical -->
+    <div class="photo-block tall"><img src="images\scd mit team grp photo.png" alt="Speaking Event"></div>
+    <div class="photo-block tall"><img src="images\mum grp photo.png" alt="Conference"></div>
+    
+    <!-- Fifth landscape -->
+    <div class="photo-block wide"><img src="images\ahm captains c photo.png" alt="Team Event"></div>
+    
+    <!-- 3 squares -->
+    <div class="photo-block square"><img src="images\29.png" alt="Innovation Session"></div>
+    <div class="photo-block square"><img src="images\aws office women.jpg" alt="Industry Event"></div>
+    <div class="photo-block square"><img src="images\sanjivani desk speak photo.png" alt="Professional Development"></div>
+    
+    <!-- Sixth landscape -->
+    <div class="photo-block wide"><img src="images\carnival photo.jpg" alt="Leadership Event"></div>
+    
+    <!-- 2 vertical -->
+    <div class="photo-block tall"><img src="images\cloud discovery photo.png" alt="Tech Meetup"></div>
+    <div class="photo-block tall"><img src="images\mob photo.jpg" alt="Workshop Session"></div>
+    
+    <!-- Seventh landscape -->
+    <div class="photo-block wide"><img src="images\discovery day.jpg" alt="Professional Event"></div>
+    
+    <!-- 3 squares -->
+    <div class="photo-block square"><img src="images\on boarding cloud clg cert photo.jpeg" alt="Speaking Opportunity"></div>
+    <div class="photo-block square"><img src="images\indo-hong kong.png" alt="Community Event"></div>
+    <div class="photo-block square"><img src="images\cloud dis speaker photo.png" alt="Training Session"></div>
+    
+    <!-- Eighth landscape -->
+    <div class="photo-block wide"><img src="images\cloud discovery team grp photo.jpg" alt="Tech Event"></div>
+    
+    <!-- 2 vertical -->
+    <div class="photo-block tall"><img src="images\IGDTU.jpeg" alt="Conference Talk"></div>
+    <div class="photo-block tall"><img src="images\mum grp all.jpg" alt="Workshop"></div>
+    
+    <!-- Ninth landscape -->
+    <div class="photo-block wide"><img src="images\ftsbts launch photo.png" alt="Panel Discussion"></div>
+    
+    <!-- 3 squares -->
+    <div class="photo-block square"><img src="images\lions club expo.jpg" alt="Community Event"></div>
+    <div class="photo-block square flip"><img src="images\ted standing.jpg" alt="Tech Conference"></div>
+    <div class="photo-block square flip"><img src="images\book win photo.png" alt="Speaking Engagement"></div>
+    
+    <!-- Tenth landscape -->
+    <div class="photo-block wide"><img src="images\salesforce.jpg" alt="Networking Event"></div>
+    
+    <!-- 2 vertical -->
+    <div class="photo-block tall"><img src="images\mum ridhima k.jpg" alt="Community Event"></div>
+    <div class="photo-block tall"><img src="images\aws ug pune volunteer.png" alt="Panel Discussion"></div>
+    
+    <!-- Eleventh landscape -->
+    <div class="photo-block wide"><img src="images\amzn pune.jpg" alt="Professional Event"></div>
+    
+    <!-- 3 squares -->
+    <div class="photo-block square"><img src="images\jatra 1.0.jpg" alt="Presentation"></div>
+    <div class="photo-block square"><img src="images\led workshop.jpg" alt="Workshop Session"></div>
+    <div class="photo-block square"><img src="images\luise conv.jpg" alt="Workshop"></div>
+    
+    <!-- Twelfth landscape -->
+    <div class="photo-block wide"><img src="images\ahmedabad acd.png" alt="Professional Meetup"></div>
+    
+    <!-- 2 vertical -->
+    <div class="photo-block tall"><img src="images\arsh grp photo.jpg" alt="Tech Talk"></div>
+    <div class="photo-block tall"><img src="images\scd mit team grp photo.png" alt="Community Gathering"></div>
+    
+    <!-- Thirteenth landscape -->
+    <div class="photo-block wide"><img src="images\womens day ug pune.jpg" alt="Speaking Event"></div>
+    
+    <!-- 3 squares -->
+    <div class="photo-block square"><img src="images\hackathon.png" alt="Conference"></div>
+    <div class="photo-block square"><img src="images\GD winner.png" alt="Team Event"></div>
+    <div class="photo-block square"><img src="images\aws office women.jpg" alt="Innovation Session"></div>
+    
+    <!-- Fourteenth landscape -->
+    <div class="photo-block wide"><img src="images\carnival photo.jpg" alt="Industry Event"></div>
+    
+    <!-- 2 vertical -->
+    <div class="photo-block tall"><img src="images\cloud discovery photo.png" alt="Professional Development"></div>
+    <div class="photo-block tall"><img src="images\mob photo.jpg" alt="Leadership Event"></div>
+    
+    <!-- Fifteenth landscape -->
+    <div class="photo-block wide"><img src="images\discovery day.jpg" alt="Tech Meetup"></div>
+    
+    <!-- 3 squares -->
+    <div class="photo-block square"><img src="images\on boarding cloud clg cert photo.jpeg" alt="Workshop Session"></div>
+    <div class="photo-block square"><img src="images\indo-hong kong.png" alt="Professional Event"></div>
+    <div class="photo-block square"><img src="images\cloud dis speaker photo.png" alt="Speaking Opportunity"></div>
+    
+    <!-- Sixteenth landscape -->
+    <div class="photo-block wide"><img src="images\cloud discovery team grp photo.jpg" alt="Community Event"></div>
+    
+    <!-- 2 vertical -->
+    <div class="photo-block tall"><img src="images\IGDTU.jpeg" alt="Training Session"></div>
+    <div class="photo-block tall"><img src="images\mum grp all.jpg" alt="Tech Event"></div>
+    
+    <!-- Seventeenth landscape -->
+    <div class="photo-block wide"><img src="images\ftsbts launch photo.png" alt="Conference Talk"></div>
+    
+    <!-- 3 squares -->
+    <div class="photo-block square"><img src="images\lions club expo.jpg" alt="Workshop"></div>
+    <div class="photo-block square"><img src="images\ted standing.jpg" alt="Panel Discussion"></div>
+    <div class="photo-block square"><img src="images\book win photo.png" alt="Community Event"></div>
+    
+    <!-- Eighteenth landscape -->
+    <div class="photo-block wide"><img src="images\salesforce.jpg" alt="Tech Conference"></div>
+    
+    <!-- 2 vertical -->
+    <div class="photo-block tall"><img src="images\mum ridhima k.jpg" alt="Speaking Engagement"></div>
+    <div class="photo-block tall"><img src="images\aws ug pune volunteer.png" alt="Networking Event"></div>
+    
+    <!-- Nineteenth landscape -->
+    <div class="photo-block wide"><img src="images\amzn pune.jpg" alt="Community Event"></div>
+    
+    <!-- 3 squares -->
+    <div class="photo-block square"><img src="images\amazon office.jpg" alt="Panel Discussion"></div>
+    <div class="photo-block square"><img src="images\tedx.png" alt="Professional Event"></div>
+    <div class="photo-block square"><img src="images\ah speaking photo.png" alt="Presentation"></div>
+    
+  </div>
+
+  <div class="main-content">
+    <div class="centered-content">
+      <h1>
+        Bhoomi Ganesh Raut<br/>
+        <span class="subtitle">AWS 2X Certified | AWS New Voices 2025 | AWS Cloud Club Captain 24 | AWS User Group Pune Member | Public Speaker | Blogger | Udemy Instructor | Computer Science Undergraduate | MBA Aspirant </span>
+      </h1>
+      
+      <div class="social-bubbles">
+        <a href="https://github.com/bhoomiraut/bhoomi" class="bubble" target="_blank">GitHub</a>
+        <a href="https://www.linkedin.com/in/bhoomi-ganesh-raut/" class="bubble" target="_blank">LinkedIn</a>
+        <a href="mailto:bhoomi.raut100@gmail.com" class="bubble">Contact Me</a>
+        <a href="https://www.credly.com/users/bhoomi-raut/" class="bubble" onclick="showBadgesScreen(event)" target="_blank">Digital Badges</a>
+      </div>
+
+      <div class="about-content">
+        <div class="text-content">
+          <div class="content-container">
+            <h2>My Journey</h2>
+            <p class="lead">
+              My journey began with a simple fascination: how do complex systems actually work, and why do some teams create lasting solutions while others struggle with the same problems? This curiosity led me through years of working with cloud architectures, where I discovered that the most interesting challenges weren't purely technical—they lived at the intersection of code, people, and organizational dynamics.
+            </p>
+
+            <p class="lead">
+              Management thinking wasn't something I sought out initially. It emerged from necessity when I realized that elegant technical solutions often failed not because of the code, but because of how decisions were made, how teams communicated, and how individual growth connected to collective success. I found myself drawn to frameworks that helped make sense of these human systems, always with the goal of creating environments where both people and technology could thrive.
+            </p>
+
+            <p class="lead">
+              Community involvement happened organically. Early in my career, someone took time to explain concepts I was struggling with, and that generosity shaped how I wanted to contribute as I grew. Whether through AWS user groups, mentoring conversations, or simply being present when someone needed to think through a difficult problem, I've learned that the most valuable knowledge often emerges through shared exploration rather than individual expertise.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hovering Info Container -->
+  <div class="hover-info-container">
+    <div class="hover-info-content">
+      <p>AWS 2X Certified | AWS New Voices 2025 | AWS Cloud Club Captain 24 | Public Speaker | Udemy Instructor | Blogger | AWS User Group Member | MBA Aspirant | Computer Science Undergraduate</p>
+    </div>
+  </div>
+
+  <!-- Navigation Arrows -->
+  <div class="nav-arrow nav-arrow-right" onclick="window.location.href='volunteer.html'">
+    <div class="arrow-icon">→</div>
+  </div>
+</section>
+
+  <!-- Digital Badges Transition Screen -->
+  <div class="badges-overlay" id="badgesOverlay">
+    <div class="badges-container">
+      <div class="glowing-orbit orbit-1"></div>
+      <div class="glowing-orbit orbit-2"></div>
+      <div class="glowing-orbit orbit-3"></div>
+      
+      <div class="badges-title">AWS Digital Badges</div>
+      
+      <div class="floating-badge badge-1">
+        <img src="https://images.credly.com/size/340x340/images/00634f82-b07f-4bbd-a6bb-53de397fc3a6/image.png" alt="AWS Cloud Practitioner">
+      </div>
+      
+      <div class="floating-badge badge-2">
+        <img src="https://images.credly.com/size/340x340/images/0e284c3f-5164-4b21-8660-0d84737941bc/image.png" alt="AWS Solutions Architect Associate">
+      </div>
+      
+      <div class="floating-badge badge-3">
+        <img src="https://images.credly.com/size/340x340/images/b9feab85-1a43-4f6c-99a5-631b88d5461b/image.png" alt="AWS Developer Associate">
+      </div>
+      
+      <div class="floating-badge badge-4">
+        <img src="https://images.credly.com/size/340x340/images/4bc21d8b-4afe-4fbd-9a90-a9de8bf7b240/image.png" alt="AWS SysOps Administrator">
+      </div>
+      
+      <div class="floating-badge badge-5">
+        <img src="https://images.credly.com/size/340x340/images/bd31ef42-d460-493e-8503-39592aaf0458/image.png" alt="AWS Security Specialty">
+      </div>
+    </div>
+  </div>
+
+<script>
+  // Load theme on page load
+  document.addEventListener('DOMContentLoaded', function() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      document.body.classList.add('dark');
+    }
+  });
+
+  function toggleTheme() {
+    document.body.classList.toggle("dark");
+    
+    // Save theme preference
+    if (document.body.classList.contains('dark')) {
+      localStorage.setItem('theme', 'dark');
+    } else {
+      localStorage.setItem('theme', 'light');
+    }
+  }
+
+  function showBadgesScreen(event) {
+    event.preventDefault();
+    
+    const overlay = document.getElementById('badgesOverlay');
+    overlay.style.display = 'flex';
+    
+    // Trigger fade in
+    setTimeout(() => {
+      overlay.classList.add('show');
+    }, 10);
+    
+    // Hide after 2 seconds and redirect
+    setTimeout(() => {
+      overlay.classList.remove('show');
+      
+      // Hide overlay after fade out completes
+      setTimeout(() => {
+        overlay.style.display = 'none';
+        // Redirect to AWS certification page or Credly
+        window.open('https://www.credly.com/organizations/amazon-web-services/badges', '_blank');
+      }, 500);
+    }, 2000);
+  }
+</script>
+
+</body>
+</html>
