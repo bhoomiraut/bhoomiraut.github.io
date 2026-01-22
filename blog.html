@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Bhoomi | Blogs</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
 
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
@@ -96,6 +96,8 @@
     nav {
       display: flex;
       gap: 28px;
+      flex: 1;
+      justify-content: flex-start;
     }
 
     nav .nav-link {
@@ -127,6 +129,96 @@
 
     nav .nav-link:hover {
       color: var(--text);
+    }
+
+    /* =====================
+       HAMBURGER MENU
+    ====================== */
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      padding: 8px;
+      z-index: 101;
+      background: none;
+      border: none;
+      width: 40px;
+      height: 40px;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: var(--text);
+      margin: 2px 0;
+      transition: all 0.3s ease;
+      border-radius: 1px;
+    }
+
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -6px);
+    }
+
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+      padding-top: 80px;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-nav.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .mobile-nav-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .mobile-nav-list .nav-link {
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--text);
+      text-decoration: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      min-width: 200px;
+      text-align: center;
+    }
+
+    .mobile-nav-list .nav-link:hover,
+    .mobile-nav-list .nav-link.active {
+      background: var(--accent);
+      color: white;
     }
 
     .toggle {
@@ -293,6 +385,8 @@
     .content-container .lead {
       margin-top: 0;
       margin-bottom: 24px;
+      text-align: left;
+      line-height: 1.7;
     }
 
     .content-container .lead:last-child {
@@ -544,17 +638,267 @@
     }
 
     /* =====================
-       RESPONSIVE
+       RESPONSIVE DESIGN
     ====================== */
 
-    @media (max-width: 900px) {
+    /* Mobile and Tablet - Show Hamburger Menu */
+    @media (max-width: 1024px) {
+      nav {
+        display: none !important;
+      }
+
+      .hamburger {
+        display: flex !important;
+      }
+
+      .mobile-nav {
+        display: block !important;
+      }
+    }
+
+    /* Desktop - Show Regular Navigation */
+    @media (min-width: 1025px) {
+      .hamburger {
+        display: none;
+      }
+
+      .mobile-nav {
+        display: none;
+      }
+
+      nav {
+        display: flex;
+      }
+    }
+
+    /* =====================
+       MOBILE PHOTO COVER
+    ====================== */
+
+    .mobile-photo-cover {
+      display: none;
+      width: 100%;
+      height: 200px;
+      border-radius: 16px;
+      margin-bottom: 32px;
+      overflow: hidden;
+      position: relative;
+      background: var(--border);
+    }
+
+    .rotating-cover-image {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+      border-radius: 16px;
+    }
+
+    .rotating-cover-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition: opacity 1s ease-in-out;
+      border-radius: 16px;
+    }
+
+    /* Extra Small Devices (phones, 320px to 480px) */
+    @media (max-width: 480px) {
       header {
-        flex-direction: column;
-        gap: 18px;
+        flex-direction: row;
+        gap: 12px;
+        padding: 8px 16px;
+        justify-content: space-between;
+      }
+
+      nav {
+        display: none;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .mobile-nav {
+        display: block;
+      }
+
+      nav .nav-link {
+        font-size: 12px;
+        padding: 4px 8px;
+      }
+
+      .toggle {
+        width: 60px;
+        height: 24px;
+      }
+
+      .toggle-slider {
+        width: 20px;
+        height: 20px;
+      }
+
+      .mobile-photo-cover {
+        display: block;
       }
 
       section {
-        padding: 80px 28px;
+        padding: 60px 16px 30px 16px;
+      }
+
+      h1 {
+        font-size: 24px;
+        line-height: 1.3;
+      }
+
+      .lead {
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      .content-container {
+        padding: 20px;
+        margin-top: 20px;
+      }
+
+      #writing .blog-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+      }
+
+      .blog-card {
+        height: auto;
+        flex-direction: column;
+        min-height: 220px;
+        padding: 12px;
+      }
+
+      .blog-card .card-thumbnail {
+        width: 100%;
+        height: 100px;
+      }
+
+      .blog-card .card-content {
+        padding: 8px 12px;
+        text-align: left;
+      }
+
+      .blog-card h3 {
+        font-size: 13px;
+        line-height: 1.3;
+        margin-bottom: 6px;
+      }
+
+      .blog-card p {
+        font-size: 11px;
+        line-height: 1.4;
+      }
+
+      .blog-card .blog-meta {
+        font-size: 11px;
+        margin-bottom: 6px;
+      }
+
+      .blog-card p {
+        font-size: 12px;
+        line-height: 1.4;
+        text-align: left;
+      }
+
+      .nav-arrow {
+        width: 30px;
+        height: 40px;
+        right: 5px;
+      }
+    }
+
+    /* Small Devices (large phones, 481px to 768px) */
+    @media (min-width: 481px) and (max-width: 768px) {
+      header {
+        flex-direction: row;
+        gap: 16px;
+        padding: 12px 24px;
+        justify-content: space-between;
+      }
+
+      nav {
+        display: none;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .mobile-nav {
+        display: block;
+      }
+
+      section {
+        padding: 80px 24px 40px 24px;
+      }
+
+      h1 {
+        font-size: 32px;
+      }
+
+      .content-container {
+        padding: 24px;
+        margin-top: 24px;
+      }
+
+      #writing .blog-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .blog-card {
+        height: auto;
+        flex-direction: column;
+        min-height: 280px;
+      }
+
+      .blog-card .card-thumbnail {
+        width: 100%;
+        height: 160px;
+      }
+
+      .blog-card .card-content {
+        padding: 16px;
+        text-align: left;
+      }
+
+      .blog-card h3 {
+        font-size: 16px;
+        line-height: 1.4;
+        margin-bottom: 8px;
+      }
+
+      .blog-card p {
+        font-size: 14px;
+        line-height: 1.5;
+        text-align: left;
+      }
+
+      .blog-card .blog-meta {
+        font-size: 12px;
+        margin-bottom: 8px;
+      }
+
+      .nav-arrow {
+        width: 35px;
+        height: 50px;
+      }
+    }
+
+    /* Medium Devices (tablets, 769px to 1024px) */
+    @media (min-width: 769px) and (max-width: 1024px) {
+      header {
+        padding: 12px 40px;
+      }
+
+      section {
+        padding: 120px 40px 50px 40px;
       }
 
       h1 {
@@ -563,10 +907,168 @@
 
       #writing .blog-grid {
         grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .blog-card {
+        height: 160px;
+        flex-direction: row;
+      }
+
+      .blog-card .card-thumbnail {
+        width: 220px;
+        height: 160px;
+      }
+
+      .nav-arrow {
+        width: 38px;
+        height: 55px;
+      }
+    }
+
+    /* Large Devices (small desktops, 1025px to 1440px) */
+    @media (min-width: 1025px) and (max-width: 1440px) {
+      header {
+        padding: 8px 50px;
+      }
+
+      section {
+        padding: 150px 50px 50px 50px;
+      }
+
+      #writing .blog-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    /* Extra Large Devices (large desktops, 1441px to 1920px) */
+    @media (min-width: 1441px) and (max-width: 1920px) {
+      header {
+        padding: 8px 80px;
+      }
+
+      section {
+        padding: 150px 80px 50px 80px;
+      }
+
+      h1 {
+        font-size: 48px;
+      }
+
+      .lead {
+        font-size: 18px;
+      }
+    }
+
+    /* Ultra Wide Screens (2K, 4K, 1921px+) */
+    @media (min-width: 1921px) {
+      header {
+        padding: 8px 120px;
+      }
+
+      section {
+        padding: 150px 120px 50px 120px;
+        max-width: 1600px;
+        margin: 0 auto;
+      }
+
+      h1 {
+        font-size: 52px;
+      }
+
+      .lead {
+        font-size: 20px;
+      }
+
+      #writing .blog-grid {
+        gap: 32px;
+      }
+
+      .blog-card {
+        height: 160px;
+      }
+
+      .blog-card .card-thumbnail {
+        width: 240px;
+      }
+    }
+
+    /* Landscape Orientation for Mobile */
+    @media (max-height: 500px) and (orientation: landscape) {
+      header {
+        padding: 6px 20px;
+      }
+
+      nav .nav-link {
+        font-size: 12px;
+        padding: 4px 6px;
+      }
+
+      section {
+        padding: 80px 20px 30px 20px;
+      }
+
+      h1 {
+        font-size: 28px;
       }
 
       #writing .blog-grid {
         grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .blog-card {
+        height: auto;
+        flex-direction: row;
+      }
+
+      .blog-card .card-thumbnail {
+        width: 180px;
+        height: 100px;
+      }
+    }
+
+    /* Extra Small Devices (phones, 320px to 480px) */
+    @media (max-width: 480px) {
+      header {
+        flex-direction: column;
+        gap: 12px;
+        padding: 8px 16px;
+      }
+
+      nav {
+        flex-wrap: wrap;
+        gap: 12px;
+        justify-content: center;
+      }
+
+      nav .nav-link {
+        font-size: 12px;
+        padding: 4px 8px;
+      }
+
+      .toggle {
+        width: 60px;
+        height: 24px;
+      }
+
+      section {
+        padding: 60px 16px 30px 16px;
+      }
+
+      h1 {
+        font-size: 24px;
+        line-height: 1.3;
+      }
+
+      .lead {
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      #writing .blog-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
       }
 
       .blog-card {
@@ -579,10 +1081,206 @@
         height: 120px;
       }
 
+      .blog-card .card-content {
+        padding: 12px 16px;
+      }
+
+      .blog-card h3 {
+        font-size: 14px;
+      }
+
+      .blog-card h5 {
+        font-size: 11px;
+      }
+
+      .blog-card p {
+        font-size: 12px;
+      }
+
       .nav-arrow {
-        right: 0;
+        width: 30px;
+        height: 40px;
+        right: 5px;
+      }
+    }
+
+    /* Small Devices (large phones, 481px to 768px) */
+    @media (min-width: 481px) and (max-width: 768px) {
+      header {
+        flex-direction: column;
+        gap: 16px;
+        padding: 12px 24px;
+      }
+
+      nav {
+        flex-wrap: wrap;
+        gap: 16px;
+        justify-content: center;
+      }
+
+      section {
+        padding: 80px 24px 40px 24px;
+      }
+
+      h1 {
+        font-size: 32px;
+      }
+
+      #writing .blog-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .blog-card {
+        height: auto;
+        flex-direction: column;
+      }
+
+      .blog-card .card-thumbnail {
+        width: 100%;
+        height: 140px;
+      }
+
+      .nav-arrow {
         width: 35px;
         height: 50px;
+      }
+    }
+
+    /* Medium Devices (tablets, 769px to 1024px) */
+    @media (min-width: 769px) and (max-width: 1024px) {
+      header {
+        padding: 12px 40px;
+      }
+
+      section {
+        padding: 120px 40px 50px 40px;
+      }
+
+      h1 {
+        font-size: 36px;
+      }
+
+      #writing .blog-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .blog-card {
+        height: 160px;
+        flex-direction: row;
+      }
+
+      .blog-card .card-thumbnail {
+        width: 220px;
+        height: 160px;
+      }
+
+      .nav-arrow {
+        width: 38px;
+        height: 55px;
+      }
+    }
+
+    /* Large Devices (small desktops, 1025px to 1440px) */
+    @media (min-width: 1025px) and (max-width: 1440px) {
+      header {
+        padding: 8px 50px;
+      }
+
+      section {
+        padding: 150px 50px 50px 50px;
+      }
+
+      #writing .blog-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    /* Extra Large Devices (large desktops, 1441px to 1920px) */
+    @media (min-width: 1441px) and (max-width: 1920px) {
+      header {
+        padding: 8px 80px;
+      }
+
+      section {
+        padding: 150px 80px 50px 80px;
+      }
+
+      h1 {
+        font-size: 48px;
+      }
+
+      .lead {
+        font-size: 18px;
+      }
+    }
+
+    /* Ultra Wide Screens (2K, 4K, 1921px+) */
+    @media (min-width: 1921px) {
+      header {
+        padding: 8px 120px;
+      }
+
+      section {
+        padding: 150px 120px 50px 120px;
+        max-width: 1600px;
+        margin: 0 auto;
+      }
+
+      h1 {
+        font-size: 52px;
+      }
+
+      .lead {
+        font-size: 20px;
+      }
+
+      #writing .blog-grid {
+        gap: 32px;
+      }
+
+      .blog-card {
+        height: 160px;
+      }
+
+      .blog-card .card-thumbnail {
+        width: 240px;
+      }
+    }
+
+    /* Landscape Orientation for Mobile */
+    @media (max-height: 500px) and (orientation: landscape) {
+      header {
+        padding: 6px 20px;
+      }
+
+      nav .nav-link {
+        font-size: 12px;
+        padding: 4px 6px;
+      }
+
+      section {
+        padding: 80px 20px 30px 20px;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+
+      #writing .blog-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .blog-card {
+        height: auto;
+        flex-direction: row;
+      }
+
+      .blog-card .card-thumbnail {
+        width: 180px;
+        height: 100px;
       }
     }
 
@@ -604,6 +1302,12 @@
     <a href="education.html" class="nav-link">Education</a>
   </nav>
 
+  <button class="hamburger" onclick="toggleMobileMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
   <div class="toggle" onclick="toggleTheme()">
     <div class="toggle-slider">
       <div class="toggle-icon"></div>
@@ -612,87 +1316,109 @@
   </div>
 </header>
 
+<!-- Mobile Navigation -->
+<div class="mobile-nav" id="mobileNav">
+  <ul class="mobile-nav-list">
+    <li><a href="about.html" class="nav-link" onclick="closeMobileMenu()">About</a></li>
+    <li><a href="volunteer.html" class="nav-link" onclick="closeMobileMenu()">Volunteer</a></li>
+    <li><a href="achievements.html" class="nav-link" onclick="closeMobileMenu()">Achievements</a></li>
+    <li><a href="blog.html" class="nav-link active" onclick="closeMobileMenu()">Blogs</a></li>
+    <li><a href="community.html" class="nav-link" onclick="closeMobileMenu()">Talks</a></li>
+    <li><a href="recommendations.html" class="nav-link" onclick="closeMobileMenu()">Recommendations</a></li>
+    <li><a href="media.html" class="nav-link" onclick="closeMobileMenu()">Media</a></li>
+    <li><a href="learning.html" class="nav-link" onclick="closeMobileMenu()">Projects</a></li>
+    <li><a href="education.html" class="nav-link" onclick="closeMobileMenu()">Education</a></li>
+  </ul>
+</div>
+
 <!-- WRITING -->
 <section id="writing">
+  <!-- Mobile Photo Cover -->
+  <div class="mobile-photo-cover">
+    <div class="rotating-cover-image">
+      <img id="coverImageBlog" src="images\speakers cloud discovery photo.jpg" alt="Professional Event">
+    </div>
+  </div>
+
   <h1>Thinking Through Words</h1>
 
   <div class="blog-grid">
 
-    <div class="blog-card" onclick="window.open('https://builder.aws.com/content/37Sb3d6fsvi9RvTzAxYkJPMHrK2/from-architecture-to-deployment-building-the-image-editing-app-with-ai-for-bharat', '_blank')">
+    <div class="blog-card">
       <div class="card-thumbnail">
         <img src="images\Img editing AI For Bharat.png" alt="Image Editing App with AI">
-        <div class="redirect-arrow">↗</div>
-        <button class="read-more-btn" onclick="event.stopPropagation(); window.open('https://builder.aws.com/content/37Sb3d6fsvi9RvTzAxYkJPMHrK2/from-architecture-to-deployment-building-the-image-editing-app-with-ai-for-bharat', '_blank')">📖</button>
+        <button class="read-more-btn" onclick="window.open('https://builder.aws.com/content/37Sb3d6fsvi9RvTzAxYkJPMHrK2/from-architecture-to-deployment-building-the-image-editing-app-with-ai-for-bharat', '_blank')">📖</button>
       </div>
       <div class="card-content">
         <div class="blog-meta">AWS Builder • Dec 2024</div>
         <h3><a href="https://builder.aws.com/content/37Sb3d6fsvi9RvTzAxYkJPMHrK2/from-architecture-to-deployment-building-the-image-editing-app-with-ai-for-bharat" target="_blank">From Architecture to Deployment — Building the Image Editing App with AI for Bharat</a></h3>
         <p>A comprehensive guide on building an AI-powered image editing application, covering architecture decisions, deployment strategies, and technical implementation details for the Indian market.</p>
+        <div class="redirect-arrow" onclick="window.open('https://builder.aws.com/content/37Sb3d6fsvi9RvTzAxYkJPMHrK2/from-architecture-to-deployment-building-the-image-editing-app-with-ai-for-bharat', '_blank')">↗</div>
       </div>
     </div>
 
-    <div class="blog-card" onclick="window.open('https://medium.com/@bhoomi.raut100/e9849dba8536', '_blank')">
+    <div class="blog-card">
       <div class="card-thumbnail">
         <img src="images\aq.jpg" alt="Amazon Q Website Build">
-        <div class="redirect-arrow">↗</div>
-        <button class="read-more-btn" onclick="event.stopPropagation(); window.open('https://medium.com/@bhoomi.raut100/e9849dba8536', '_blank')">📖</button>
+        <button class="read-more-btn" onclick="window.open('https://medium.com/@bhoomi.raut100/e9849dba8536', '_blank')">📖</button>
       </div>
       <div class="card-content">
         <div class="blog-meta">Medium • Nov 2024</div>
         <h3><a href="https://medium.com/@bhoomi.raut100/e9849dba8536" target="_blank">How Amazon Q Turned a Tough Website Request Into a Smooth Build</a></h3>
         <p>Exploring how Amazon Q's AI capabilities transformed a challenging website development project into a streamlined and efficient build process.</p>
+        <div class="redirect-arrow" onclick="window.open('https://medium.com/@bhoomi.raut100/e9849dba8536', '_blank')">↗</div>
       </div>
     </div>
 
-    <div class="blog-card" onclick="window.open('https://medium.com/@bhoomi.raut100/building-business-build-your-empire-using-amazon-q-and-python-d486712de441', '_blank')">
+    <div class="blog-card">
       <div class="card-thumbnail">
         <img src="images\business Q.png" alt="Business Empire with Amazon Q">
-        <div class="redirect-arrow">↗</div>
-        <button class="read-more-btn" onclick="event.stopPropagation(); window.open('https://medium.com/@bhoomi.raut100/building-business-build-your-empire-using-amazon-q-and-python-d486712de441', '_blank')">📖</button>
+        <button class="read-more-btn" onclick="window.open('https://medium.com/@bhoomi.raut100/building-business-build-your-empire-using-amazon-q-and-python-d486712de441', '_blank')">📖</button>
       </div>
       <div class="card-content">
         <div class="blog-meta">Medium • Oct 2024</div>
         <h3><a href="https://medium.com/@bhoomi.raut100/building-business-build-your-empire-using-amazon-q-and-python-d486712de441" target="_blank">Building "Business: Build Your Empire" Using Amazon Q and Python</a></h3>
         <p>A detailed walkthrough of creating a business simulation application leveraging Amazon Q's AI capabilities and Python's robust development ecosystem.</p>
+        <div class="redirect-arrow" onclick="window.open('https://medium.com/@bhoomi.raut100/building-business-build-your-empire-using-amazon-q-and-python-d486712de441', '_blank')">↗</div>
       </div>
     </div>
 
-    <div class="blog-card" onclick="window.open('https://medium.com/@bhoomi.raut100/hey-next-cloud-leader-yes-you-05a0d9cb5a6e', '_blank')">
+    <div class="blog-card">
       <div class="card-thumbnail">
         <img src="images\AWS Cloud Leaders.png" alt="Next Cloud Leader">
-        <div class="redirect-arrow">↗</div>
-        <button class="read-more-btn" onclick="event.stopPropagation(); window.open('https://medium.com/@bhoomi.raut100/hey-next-cloud-leader-yes-you-05a0d9cb5a6e', '_blank')">📖</button>
+        <button class="read-more-btn" onclick="window.open('https://medium.com/@bhoomi.raut100/hey-next-cloud-leader-yes-you-05a0d9cb5a6e', '_blank')">📖</button>
       </div>
       <div class="card-content">
         <div class="blog-meta">Medium • Sep 2024</div>
         <h3><a href="https://medium.com/@bhoomi.raut100/hey-next-cloud-leader-yes-you-05a0d9cb5a6e" target="_blank">Hey! Next Cloud Leader — Yes, You.</a></h3>
         <p>An inspiring piece addressing aspiring cloud professionals, discussing leadership qualities, career growth, and the mindset needed to excel in cloud computing.</p>
+        <div class="redirect-arrow" onclick="window.open('https://medium.com/@bhoomi.raut100/hey-next-cloud-leader-yes-you-05a0d9cb5a6e', '_blank')">↗</div>
       </div>
     </div>
     
-    <div class="blog-card" onclick="window.open('https://medium.com/@bhoomi.raut100/aws-is-big-yes-but-where-and-how-to-start-amazon-bedrock-has-the-answers-6868fcb42ed6', '_blank')">
+    <div class="blog-card">
       <div class="card-thumbnail">
         <img src="images\bedrock.png" alt="AWS Amazon Bedrock">
-        <div class="redirect-arrow">↗</div>
-        <button class="read-more-btn" onclick="event.stopPropagation(); window.open('https://medium.com/@bhoomi.raut100/aws-is-big-yes-but-where-and-how-to-start-amazon-bedrock-has-the-answers-6868fcb42ed6', '_blank')">📖</button>
+        <button class="read-more-btn" onclick="window.open('https://medium.com/@bhoomi.raut100/aws-is-big-yes-but-where-and-how-to-start-amazon-bedrock-has-the-answers-6868fcb42ed6', '_blank')">📖</button>
       </div>
       <div class="card-content">
         <div class="blog-meta">Medium • Aug 2024</div>
         <h3><a href="https://medium.com/@bhoomi.raut100/aws-is-big-yes-but-where-and-how-to-start-amazon-bedrock-has-the-answers-6868fcb42ed6" target="_blank">AWS is Big — Yes! But where and how to Start? Amazon BedRock Has the Answers.</a></h3>
         <p>A beginner's guide to navigating the vast AWS ecosystem, with Amazon Bedrock as the starting point for understanding cloud services and AI integration.</p>
+        <div class="redirect-arrow" onclick="window.open('https://medium.com/@bhoomi.raut100/aws-is-big-yes-but-where-and-how-to-start-amazon-bedrock-has-the-answers-6868fcb42ed6', '_blank')">↗</div>
       </div>
     </div>
 
-    <div class="blog-card" onclick="window.open('https://medium.com/@bhoomi.raut100', '_blank')">
+    <div class="blog-card">
       <div class="card-thumbnail">
-        <img src="images/12.png" alt="More Articles">
-        <div class="redirect-arrow">↗</div>
-        <button class="read-more-btn" onclick="event.stopPropagation(); window.open('https://medium.com/@bhoomi.raut100', '_blank')">📖</button>
+        <img src="images/scd mit team grp photo.png" alt="More Articles">
+        <button class="read-more-btn" onclick="window.open('https://medium.com/@bhoomi.raut100', '_blank')">📖</button>
       </div>
       <div class="card-content">
         <div class="blog-meta">Medium • Ongoing</div>
         <h3><a href="https://medium.com/@bhoomi.raut100" target="_blank">More Articles & Insights</a></h3>
         <p>Explore additional articles, tutorials, and insights on cloud computing, AI, and technology leadership on my Medium profile.</p>
+        <div class="redirect-arrow" onclick="window.open('https://medium.com/@bhoomi.raut100', '_blank')">↗</div>
       </div>
     </div>
 
@@ -727,6 +1453,76 @@
       localStorage.setItem('theme', 'light');
     }
   }
+
+  // Mobile Menu Functions
+  function toggleMobileMenu() {
+    const hamburger = document.querySelector('.hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+    
+    hamburger.classList.toggle('active');
+    mobileNav.classList.toggle('active');
+    
+    // Prevent body scroll when menu is open
+    if (mobileNav.classList.contains('active')) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  }
+
+  function closeMobileMenu() {
+    const hamburger = document.querySelector('.hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+    
+    hamburger.classList.remove('active');
+    mobileNav.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  // Close mobile menu when clicking outside
+  document.addEventListener('click', function(event) {
+    const hamburger = document.querySelector('.hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+    
+    if (!hamburger.contains(event.target) && !mobileNav.contains(event.target)) {
+      closeMobileMenu();
+    }
+  });
+</script>
+
+<script>
+// Rotating Cover Image for Blog Page
+const landscapeImagesBlog = [
+  'images\\speakers cloud discovery photo.jpg',
+  'images\\ahmedabad acd.png',
+  'images\\mum luise photo.png',
+  'images\\womens day ug pune.jpg',
+  'images\\ahm captains c photo.png',
+  'images\\carnival photo.jpg',
+  'images\\discovery day.jpg',
+  'images\\cloud discovery team grp photo.jpg',
+  'images\\ftsbts launch photo.png',
+  'images\\salesforce.jpg',
+  'images\\amzn pune.jpg'
+];
+
+let currentImageIndexBlog = 0;
+
+function rotateCoverImageBlog() {
+  const coverImage = document.getElementById('coverImageBlog');
+  if (coverImage) {
+    currentImageIndexBlog = (currentImageIndexBlog + 1) % landscapeImagesBlog.length;
+    coverImage.style.opacity = '0';
+    
+    setTimeout(() => {
+      coverImage.src = landscapeImagesBlog[currentImageIndexBlog];
+      coverImage.style.opacity = '1';
+    }, 500);
+  }
+}
+
+// Start rotating images every 3 seconds
+setInterval(rotateCoverImageBlog, 3000);
 </script>
 
 </body>
