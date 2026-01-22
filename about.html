@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Bhoomi | Portfolio</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
 
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
@@ -132,6 +132,96 @@
 
     nav .nav-link:hover {
       color: var(--text);
+    }
+
+    /* =====================
+       HAMBURGER MENU
+    ====================== */
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      padding: 8px;
+      z-index: 101;
+      background: none;
+      border: none;
+      width: 40px;
+      height: 40px;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: var(--text);
+      margin: 2px 0;
+      transition: all 0.3s ease;
+      border-radius: 1px;
+    }
+
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -6px);
+    }
+
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+      padding-top: 80px;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-nav.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .mobile-nav-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .mobile-nav-list .nav-link {
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--text);
+      text-decoration: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      min-width: 200px;
+      text-align: center;
+    }
+
+    .mobile-nav-list .nav-link:hover,
+    .mobile-nav-list .nav-link.active {
+      background: var(--accent);
+      color: white;
     }
 
     .toggle {
@@ -330,7 +420,7 @@
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: 24px;
-      padding: 30px 5px 20px 60px;
+      padding: 30px 40px 20px 40px;
       margin-top: 30px;
       margin-bottom: 0px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.04);
@@ -352,10 +442,108 @@
     .content-container .lead {
       margin-top: 0;
       margin-bottom: 24px;
+      text-align: left;
+      line-height: 1.7;
     }
 
     .content-container .lead:last-child {
       margin-bottom: 0;
+    }
+
+    /* =====================
+       JOURNEY QUOTE STYLING
+    ====================== */
+
+    .journey-quote {
+      position: relative;
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(34, 211, 238, 0.05));
+      border: 1px solid rgba(59, 130, 246, 0.15);
+      border-radius: 16px;
+      padding: 24px 28px;
+      margin: 24px 0 32px 0;
+      overflow: hidden;
+    }
+
+    body.dark .journey-quote {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.12), rgba(34, 211, 238, 0.08));
+      border-color: rgba(59, 130, 246, 0.25);
+    }
+
+    .quote-content {
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 1.6;
+      color: var(--text);
+      position: relative;
+      z-index: 2;
+    }
+
+    .name-highlight {
+      background: linear-gradient(135deg, #3b82f6, #22d3ee);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 800;
+      font-size: 20px;
+    }
+
+    .sanskrit {
+      color: var(--accent);
+      font-weight: 500;
+      font-style: normal;
+      opacity: 0.9;
+    }
+
+    .cloud-icon {
+      display: inline-block;
+      animation: float 3s ease-in-out infinite;
+      margin-left: 4px;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-4px); }
+    }
+
+    .quote-accent {
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(34, 211, 238, 0.1));
+      border-radius: 18px;
+      z-index: 1;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .journey-quote:hover .quote-accent {
+      opacity: 1;
+    }
+
+    .journey-quote::before {
+      content: '"';
+      position: absolute;
+      top: 8px;
+      left: 12px;
+      font-size: 48px;
+      font-weight: 300;
+      color: var(--accent);
+      opacity: 0.3;
+      z-index: 1;
+    }
+
+    .journey-quote::after {
+      content: '"';
+      position: absolute;
+      bottom: -8px;
+      right: 12px;
+      font-size: 48px;
+      font-weight: 300;
+      color: var(--accent);
+      opacity: 0.3;
+      z-index: 1;
     }
 
     /* =====================
@@ -1153,60 +1341,51 @@ t     #about .focus-arrow {
     }
 
     /* =====================
-       RESPONSIVE
+       RESPONSIVE DESIGN
     ====================== */
 
-    @media (max-width: 900px) {
-      header {
-        flex-direction: column;
-        gap: 18px;
-      }
+    /* =====================
+       MOBILE PHOTO COVER
+    ====================== */
 
-      section {
-        padding: 80px 28px;
-      }
+    .mobile-photo-cover {
+      display: none;
+      width: 100%;
+      height: 200px;
+      border-radius: 16px;
+      margin-bottom: 32px;
+      overflow: hidden;
+      position: relative;
+      background: var(--border);
+    }
 
-      h1 {
-        font-size: 36px;
-      }
+    .rotating-cover-image {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+      border-radius: 16px;
+    }
 
-      .subtitle {
-        font-size: 14px;
-      }
+    .rotating-cover-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition: opacity 1s ease-in-out;
+      border-radius: 16px;
+    }
 
-      .grid {
-        grid-template-columns: 1fr;
-      }
 
-      #community .experience-grid {
-        grid-template-columns: 1fr;
-      }
 
-      #learning .timeline-item {
-        padding-left: 48px;
-      }
+    /* =====================
+       RESPONSIVE DESIGN
+    ====================== */
 
-      #learning .timeline::before {
-        left: 16px;
-      }
-
-      #learning .timeline-item::before {
-        left: 8px;
-      }
-
-      .hover-info-container {
-        display: none;
-      }
-
-      .nav-arrow {
-        right: 0;
-        width: 35px;
-        height: 50px;
-      }
-
-      #about .main-content {
-        margin-left: 0;
-        padding-left: 20px;
+    /* Mobile and Tablet - Show Photo Cover */
+    @media (max-width: 1024px) {
+      .mobile-photo-cover {
+        display: block;
       }
 
       #about .photo-wall {
@@ -1219,10 +1398,298 @@ t     #about .focus-arrow {
 
       #about .main-content {
         margin-left: 0;
+        padding-left: 20px;
+      }
+    }
+
+    /* Extra Small Devices (phones, 320px to 480px) */
+    @media (max-width: 480px) {
+      header {
+        flex-direction: row;
+        gap: 12px;
+        padding: 8px 16px;
+        justify-content: space-between;
+      }
+
+      nav {
+        display: none;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .mobile-nav {
+        display: block;
+      }
+
+      nav .nav-link {
+        font-size: 12px;
+        padding: 4px 8px;
+      }
+
+      .toggle {
+        width: 60px;
+        height: 24px;
+      }
+
+      .toggle-slider {
+        width: 20px;
+        height: 20px;
+      }
+
+      #about .main-content {
+        margin-left: 0;
+        padding: 20px 16px;
       }
 
       #about .photo-wall {
         display: none;
+      }
+
+      h1 {
+        font-size: 24px;
+        line-height: 1.3;
+      }
+
+      .subtitle {
+        font-size: 12px;
+        line-height: 1.4;
+      }
+
+      .social-bubbles {
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .bubble {
+        font-size: 12px;
+        padding: 8px 12px;
+      }
+
+      .lead {
+        font-size: 14px;
+        line-height: 1.6;
+        text-align: left;
+      }
+
+      .content-container {
+        padding: 20px;
+        margin-top: 20px;
+      }
+
+      .journey-quote {
+        padding: 20px;
+        margin: 20px 0 24px 0;
+      }
+
+      .quote-content {
+        font-size: 16px;
+        line-height: 1.5;
+      }
+
+      .name-highlight {
+        font-size: 18px;
+      }
+
+      .journey-quote::before,
+      .journey-quote::after {
+        font-size: 36px;
+      }
+
+      .nav-arrow {
+        width: 30px;
+        height: 40px;
+        right: 5px;
+      }
+
+      .hover-info-container {
+        display: none;
+      }
+    }
+
+    /* Small Devices (large phones, 481px to 768px) */
+    @media (min-width: 481px) and (max-width: 768px) {
+      header {
+        flex-direction: row;
+        gap: 16px;
+        padding: 12px 24px;
+        justify-content: space-between;
+      }
+
+      nav {
+        display: none;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .mobile-nav {
+        display: block;
+      }
+
+      nav .nav-link {
+        font-size: 13px;
+      }
+
+      #about .main-content {
+        margin-left: 0;
+        padding: 30px 24px;
+      }
+
+      #about .photo-wall {
+        display: none;
+      }
+
+      h1 {
+        font-size: 32px;
+      }
+
+      .subtitle {
+        font-size: 13px;
+      }
+
+      .social-bubbles {
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .nav-arrow {
+        width: 35px;
+        height: 50px;
+      }
+
+      .hover-info-container {
+        display: none;
+      }
+    }
+
+    /* Medium Devices (tablets, 769px to 1024px) */
+    @media (min-width: 769px) and (max-width: 1024px) {
+      header {
+        padding: 12px 40px;
+      }
+
+      nav {
+        gap: 20px;
+      }
+
+      #about .photo-wall {
+        width: 280px;
+      }
+
+      #about .main-content {
+        margin-left: 300px;
+        padding: 40px 40px;
+      }
+
+      h1 {
+        font-size: 36px;
+      }
+
+      .nav-arrow {
+        width: 38px;
+        height: 55px;
+      }
+    }
+
+    /* Large Devices (small desktops, 1025px to 1440px) */
+    @media (min-width: 1025px) and (max-width: 1440px) {
+      header {
+        padding: 8px 50px;
+      }
+
+      #about .photo-wall {
+        width: 350px;
+      }
+
+      #about .main-content {
+        margin-left: 370px;
+        padding: 50px 60px;
+      }
+    }
+
+    /* Extra Large Devices (large desktops, 1441px to 1920px) */
+    @media (min-width: 1441px) and (max-width: 1920px) {
+      header {
+        padding: 8px 80px;
+      }
+
+      #about .photo-wall {
+        width: 400px;
+      }
+
+      #about .main-content {
+        margin-left: 420px;
+        padding: 50px 80px;
+      }
+
+      h1 {
+        font-size: 48px;
+      }
+
+      .lead {
+        font-size: 18px;
+      }
+    }
+
+    /* Ultra Wide Screens (2K, 4K, 1921px+) */
+    @media (min-width: 1921px) {
+      header {
+        padding: 8px 120px;
+      }
+
+      #about .photo-wall {
+        width: 450px;
+      }
+
+      #about .main-content {
+        margin-left: 470px;
+        padding: 60px 120px;
+        max-width: 1400px;
+      }
+
+      h1 {
+        font-size: 52px;
+      }
+
+      .lead {
+        font-size: 20px;
+        max-width: 900px;
+      }
+
+      .social-bubbles {
+        gap: 20px;
+      }
+
+      .bubble {
+        font-size: 16px;
+        padding: 12px 24px;
+      }
+    }
+
+    /* Landscape Orientation for Mobile */
+    @media (max-height: 500px) and (orientation: landscape) {
+      header {
+        padding: 6px 20px;
+      }
+
+      nav .nav-link {
+        font-size: 12px;
+        padding: 4px 6px;
+      }
+
+      #about .main-content {
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+
+      .social-bubbles {
+        margin-top: 16px;
       }
     }
 
@@ -1244,6 +1711,12 @@ t     #about .focus-arrow {
     <a href="education.html" class="nav-link">Education</a>
   </nav>
 
+  <button class="hamburger" onclick="toggleMobileMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
   <div class="toggle" onclick="toggleTheme()">
     <div class="toggle-slider">
       <div class="toggle-icon"></div>
@@ -1251,6 +1724,21 @@ t     #about .focus-arrow {
     <div class="toggle-text"></div>
   </div>
 </header>
+
+<!-- Mobile Navigation -->
+<div class="mobile-nav" id="mobileNav">
+  <ul class="mobile-nav-list">
+    <li><a href="about.html" class="nav-link active" onclick="closeMobileMenu()">About</a></li>
+    <li><a href="volunteer.html" class="nav-link" onclick="closeMobileMenu()">Volunteer</a></li>
+    <li><a href="achievements.html" class="nav-link" onclick="closeMobileMenu()">Achievements</a></li>
+    <li><a href="blog.html" class="nav-link" onclick="closeMobileMenu()">Blogs</a></li>
+    <li><a href="community.html" class="nav-link" onclick="closeMobileMenu()">Talks</a></li>
+    <li><a href="recommendations.html" class="nav-link" onclick="closeMobileMenu()">Recommendations</a></li>
+    <li><a href="media.html" class="nav-link" onclick="closeMobileMenu()">Media</a></li>
+    <li><a href="learning.html" class="nav-link" onclick="closeMobileMenu()">Projects</a></li>
+    <li><a href="education.html" class="nav-link" onclick="closeMobileMenu()">Education</a></li>
+  </ul>
+</div>
 
 <!-- ABOUT -->
 <section id="about" class="active">
@@ -1403,6 +1891,13 @@ t     #about .focus-arrow {
   </div>
 
   <div class="main-content">
+    <!-- Mobile Photo Cover -->
+    <div class="mobile-photo-cover">
+      <div class="rotating-cover-image">
+        <img id="coverImage" src="images\speakers cloud discovery photo.jpg" alt="Professional Event">
+      </div>
+    </div>
+
     <div class="centered-content">
       <h1>
         Bhoomi Ganesh Raut<br/>
@@ -1420,16 +1915,24 @@ t     #about .focus-arrow {
         <div class="text-content">
           <div class="content-container">
             <h2>My Journey</h2>
+            
+            <!-- Highlighted Quote -->
+            <div class="journey-quote">
+              <div class="quote-content">
+                <span class="name-highlight">Bhoomi</span> <span class="sanskrit">(वसुंधरा)</span>, rooted to the ground, my journey is about staying connected to the roots while empowering rural talents to grow beyond boundaries and reach clouds. <span class="cloud-icon">☁️</span>
+              </div>
+              <div class="quote-accent"></div>
+            </div>
+
             <p class="lead">
-              My journey began with a simple fascination: how do complex systems actually work, and why do some teams create lasting solutions while others struggle with the same problems? This curiosity led me through years of working with cloud architectures, where I discovered that the most interesting challenges weren't purely technical—they lived at the intersection of code, people, and organizational dynamics.
+              What started in March 2024 as a simple curiosity about the cloud slowly turned into something larger — "For The Students, By The Students". Learning wasn’t confined to courses or certifications; it happened through experimenting, building projects, writing while learning, encouraging next gen leadership and openly sharing both wins and mistakes. This approach helped create a space where students from rural could see cloud not as something distant, but something reachable.
             </p>
 
             <p class="lead">
-              Management thinking wasn't something I sought out initially. It emerged from necessity when I realized that elegant technical solutions often failed not because of the code, but because of how decisions were made, how teams communicated, and how individual growth connected to collective success. I found myself drawn to frameworks that helped make sense of these human systems, always with the goal of creating environments where both people and technology could thrive.
-            </p>
+              As consistency grew, so did responsibility. Community sessions, official AWS talks, and serving as AWS Cloud Club Captain ’24 at Sanjivani College of Engineering, came from showing up repeatedly and became unstoppable. Collaborating with AWS User Group Pune to organize AWS Cloud Discovery Day for 600+ learners, accomplished the agenda I followed from Day 1: "from 1 to many", and further started training students through initiatives like AWS Alpha Capsule and the ongoing AWS Beta batch, were practical extensions of the same belief — access matters. Seeing students earn global AWS certifications reinforced the value of peer-driven, grounded learning.            </p>
 
             <p class="lead">
-              Community involvement happened organically. Early in my career, someone took time to explain concepts I was struggling with, and that generosity shaped how I wanted to contribute as I grew. Whether through AWS user groups, mentoring conversations, or simply being present when someone needed to think through a difficult problem, I've learned that the most valuable knowledge often emerges through shared exploration rather than individual expertise.
+              This journey is still unfolding. Rooted in perseverance and built despite limited resources, it reflects a leadership style shaped through action — growing from rural beginnings to contributing at a global community level. Every project, blog, talk, and initiative is part of a continuous effort to give back, strengthen student-led ecosystems, and create meaningful access to learning. *This is not a destination, but an ongoing process of building, contributing, and growing alongside the community.
             </p>
           </div>
         </div>
@@ -1501,6 +2004,41 @@ t     #about .focus-arrow {
     }
   }
 
+  // Mobile Menu Functions
+  function toggleMobileMenu() {
+    const hamburger = document.querySelector('.hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+    
+    hamburger.classList.toggle('active');
+    mobileNav.classList.toggle('active');
+    
+    // Prevent body scroll when menu is open
+    if (mobileNav.classList.contains('active')) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  }
+
+  function closeMobileMenu() {
+    const hamburger = document.querySelector('.hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+    
+    hamburger.classList.remove('active');
+    mobileNav.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  // Close mobile menu when clicking outside
+  document.addEventListener('click', function(event) {
+    const hamburger = document.querySelector('.hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+    
+    if (!hamburger.contains(event.target) && !mobileNav.contains(event.target)) {
+      closeMobileMenu();
+    }
+  });
+
   function showBadgesScreen(event) {
     event.preventDefault();
     
@@ -1524,6 +2062,41 @@ t     #about .focus-arrow {
       }, 500);
     }, 2000);
   }
+</script>
+
+<script>
+// Rotating Cover Image
+const landscapeImages = [
+  'images\\speakers cloud discovery photo.jpg',
+  'images\\ahmedabad acd.png',
+  'images\\mum luise photo.png',
+  'images\\womens day ug pune.jpg',
+  'images\\ahm captains c photo.png',
+  'images\\carnival photo.jpg',
+  'images\\discovery day.jpg',
+  'images\\cloud discovery team grp photo.jpg',
+  'images\\ftsbts launch photo.png',
+  'images\\salesforce.jpg',
+  'images\\amzn pune.jpg'
+];
+
+let currentImageIndex = 0;
+
+function rotateCoverImage() {
+  const coverImage = document.getElementById('coverImage');
+  if (coverImage) {
+    currentImageIndex = (currentImageIndex + 1) % landscapeImages.length;
+    coverImage.style.opacity = '0';
+    
+    setTimeout(() => {
+      coverImage.src = landscapeImages[currentImageIndex];
+      coverImage.style.opacity = '1';
+    }, 500);
+  }
+}
+
+// Start rotating images every 3 seconds
+setInterval(rotateCoverImage, 3000);
 </script>
 
 </body>
