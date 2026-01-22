@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Bhoomi | Volunteer</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
   <!-- Updated: Fixed volunteer section -->
 
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -128,6 +128,95 @@
 
     nav .nav-link:hover {
       color: var(--text);
+    }
+
+    /* =====================
+       HAMBURGER MENU
+    ====================== */
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      padding: 8px;
+      z-index: 101;
+      background: none;
+      border: none;
+      width: 40px;
+      height: 40px;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: var(--text);
+      margin: 2px 0;
+      transition: all 0.3s ease;
+      border-radius: 1px;
+    }
+
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -6px);
+    }
+
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: var(--bg);
+      z-index: 100;
+      padding-top: 80px;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-nav.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .mobile-nav-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .mobile-nav-list .nav-link {
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--text);
+      text-decoration: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      min-width: 200px;
+      text-align: center;
+    }
+
+    .mobile-nav-list .nav-link:hover,
+    .mobile-nav-list .nav-link.active {
+      background: var(--accent);
+      color: white;
     }
 
     .toggle {
@@ -639,11 +728,99 @@
       }
 
       .volunteer-grid {
-        grid-template-columns: 1fr;
-        gap: 24px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
         margin-left: 0;
         margin-right: 0;
         width: 100%;
+      }
+
+      .volunteer-card {
+        height: auto;
+        flex-direction: column;
+        padding: 16px;
+      }
+
+      .volunteer-card .thumbnail {
+        width: 100%;
+        height: 100px;
+      }
+
+      .volunteer-card h3 {
+        font-size: 14px;
+        margin-bottom: 8px;
+      }
+
+      .volunteer-card p {
+        font-size: 12px;
+        line-height: 1.4;
+      }
+
+      .nav-arrow {
+        right: 0;
+        width: 35px;
+        height: 50px;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .mobile-nav {
+        display: block;
+      }
+
+      nav {
+        display: none;
+      }
+    }
+
+    /* Small Devices (large phones, 481px to 768px) */
+    @media (min-width: 481px) and (max-width: 768px) {
+      header {
+        flex-direction: row;
+        gap: 16px;
+        padding: 12px 24px;
+        justify-content: space-between;
+      }
+
+      nav {
+        display: none;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .mobile-nav {
+        display: block;
+      }
+
+      section {
+        padding: 80px 24px 40px 24px;
+      }
+
+      h1 {
+        font-size: 32px;
+      }
+
+      .featured-volunteer {
+        flex-direction: column;
+        padding: 20px;
+        gap: 20px;
+        min-height: auto;
+        margin: 0;
+        width: 100%;
+      }
+
+      .featured-volunteer .featured-image {
+        width: 100%;
+        height: 180px;
+      }
+
+      .volunteer-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
       }
 
       .volunteer-card {
@@ -653,13 +830,52 @@
 
       .volunteer-card .thumbnail {
         width: 100%;
-        height: 120px;
+        height: 140px;
       }
 
       .nav-arrow {
-        right: 0;
         width: 35px;
         height: 50px;
+      }
+    }
+
+    /* Medium Devices (tablets, 769px to 1024px) */
+    @media (min-width: 769px) and (max-width: 1024px) {
+      header {
+        padding: 12px 40px;
+      }
+
+      section {
+        padding: 120px 40px 50px 40px;
+      }
+
+      h1 {
+        font-size: 36px;
+      }
+
+      .volunteer-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+      }
+
+      .nav-arrow {
+        width: 38px;
+        height: 55px;
+      }
+    }
+
+    /* Large Devices and above - keep original layout */
+    @media (min-width: 1025px) {
+      .hamburger {
+        display: none;
+      }
+
+      .mobile-nav {
+        display: none;
+      }
+
+      nav {
+        display: flex;
       }
     }
 
@@ -681,6 +897,12 @@
     <a href="education.html" class="nav-link">Education</a>
   </nav>
 
+  <button class="hamburger" onclick="toggleMobileMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
   <div class="toggle" onclick="toggleTheme()">
     <div class="toggle-slider">
       <div class="toggle-icon"></div>
@@ -688,6 +910,21 @@
     <div class="toggle-text"></div>
   </div>
 </header>
+
+<!-- Mobile Navigation -->
+<div class="mobile-nav" id="mobileNav">
+  <ul class="mobile-nav-list">
+    <li><a href="about.html" class="nav-link" onclick="closeMobileMenu()">About</a></li>
+    <li><a href="volunteer.html" class="nav-link active" onclick="closeMobileMenu()">Volunteer</a></li>
+    <li><a href="achievements.html" class="nav-link" onclick="closeMobileMenu()">Achievements</a></li>
+    <li><a href="blog.html" class="nav-link" onclick="closeMobileMenu()">Blogs</a></li>
+    <li><a href="community.html" class="nav-link" onclick="closeMobileMenu()">Talks</a></li>
+    <li><a href="recommendations.html" class="nav-link" onclick="closeMobileMenu()">Recommendations</a></li>
+    <li><a href="media.html" class="nav-link" onclick="closeMobileMenu()">Media</a></li>
+    <li><a href="learning.html" class="nav-link" onclick="closeMobileMenu()">Projects</a></li>
+    <li><a href="education.html" class="nav-link" onclick="closeMobileMenu()">Education</a></li>
+  </ul>
+</div>
 
 <!-- VOLUNTEER -->
 <section id="volunteer">
@@ -716,99 +953,99 @@
 
   <div class="volunteer-grid">
 
-    <div class="volunteer-card" onclick="window.open('https://www.linkedin.com/posts/sanjivani-aws-cloud-club_aws-cloudcomputing-cloudpractitioner-activity-7377433959535673344-7S4l?utm_source=share&utm_medium=member_desktop&rcm=ACoAADlbbqwBURy054KT61oIoiRTs9E8dRHE3zE', '_blank')">
+    <div class="volunteer-card">
       <div class="thumbnail">
         <img src="images\alpha.jpg" alt="AWS Alpha Capsule Course">
-        <div class="redirect-arrow">↗</div>
       </div>
       <div class="card-content">
         <div class="volunteer-meta">Advisor @ AWS Cloud Clubs at Sanjivani COE • 2025</div>
         <h3><a href="https://www.linkedin.com/posts/sanjivani-aws-cloud-club_aws-cloudcomputing-cloudpractitioner-activity-7377433959535673344-7S4l?utm_source=share&utm_medium=member_desktop&rcm=ACoAADlbbqwBURy054KT61oIoiRTs9E8dRHE3zE" target="_blank">AWS Alpha Capsule Course</a></h3>
         <p>After college examinations, in vacations, I contributed to delivering the sessions on AWS Services and beginner-friendly hands-on projects and to its testamonial, we got 3 students AWS Certified Cloud Practitioner at the same time.</p>
+        <div class="redirect-arrow" onclick="window.open('https://www.linkedin.com/posts/sanjivani-aws-cloud-club_aws-cloudcomputing-cloudpractitioner-activity-7377433959535673344-7S4l?utm_source=share&utm_medium=member_desktop&rcm=ACoAADlbbqwBURy054KT61oIoiRTs9E8dRHE3zE', '_blank')">↗</div>
       </div>
     </div>
 
-    <div class="volunteer-card" onclick="window.open('https://www.meetup.com/aws-cloud-club-sanjivani-college-of-engineering/events/311514468/?utm_medium=referral&utm_campaign=share-btn_savedevents_share_modal&utm_source=link&utm_version=v2&member_id=416618014', '_blank')">
+    <div class="volunteer-card">
       <div class="thumbnail">
         <img src="images\beta batch.png" alt="AWS Beta Capsule Course">
-        <div class="redirect-arrow">↗</div>
       </div>
       <div class="card-content">
         <div class="volunteer-meta">Advisor @ AWS Cloud Clubs at Sanjivani COE • 2025</div>
         <h3><a href="https://www.meetup.com/aws-cloud-club-sanjivani-college-of-engineering/events/311514468/?utm_medium=referral&utm_campaign=share-btn_savedevents_share_modal&utm_source=link&utm_version=v2&member_id=416618014" target="_blank">AWS Beta Capsule Course</a></h3>
         <p>As soon as I completed my AWS Certified Cloud Practitioner certification, I along with a new captain, we launched the course, a focused early-morning, before college hours, daily dedicated 50 students started travelling for the Cerification Preperation.</p>
+        <div class="redirect-arrow" onclick="window.open('https://www.meetup.com/aws-cloud-club-sanjivani-college-of-engineering/events/311514468/?utm_medium=referral&utm_campaign=share-btn_savedevents_share_modal&utm_source=link&utm_version=v2&member_id=416618014', '_blank')">↗</div>
       </div>
     </div>
 
-    <div class="volunteer-card" onclick="window.open('https://www.linkedin.com/posts/activity-7411299945972133888-1JAl?utm_source=share&utm_medium=member_desktop&rcm=ACoAADlbbqwBURy054KT61oIoiRTs9E8dRHE3zE', '_blank')">
+    <div class="volunteer-card">
       <div class="thumbnail">
         <img src="images\carnival.png" alt="Entrepreneurship Carnival 2025 volunteer">
-        <div class="redirect-arrow">↗</div>
       </div>
       <div class="card-content">
         <div class="volunteer-meta">Technical Team Contributor • 2025</div>
         <h3><a href="https://www.linkedin.com/posts/activity-7411299945972133888-1JAl?utm_source=share&utm_medium=member_desktop&rcm=ACoAADlbbqwBURy054KT61oIoiRTs9E8dRHE3zE" target="_blank">Entrepreneurship Carnival 2025</a></h3>
         <p>On 25th December 2025, I had the privilege of contributing to Sanjivani International Entrepreneurship Carnival (Jatra 1.0) — an inspiring initiative nurturing entrepreneurial thinking at a very early age.</p>
+        <div class="redirect-arrow" onclick="window.open('https://www.linkedin.com/posts/activity-7411299945972133888-1JAl?utm_source=share&utm_medium=member_desktop&rcm=ACoAADlbbqwBURy054KT61oIoiRTs9E8dRHE3zE', '_blank')">↗</div>
       </div>
     </div>
 
-    <div class="volunteer-card" onclick="window.open('https://www.linkedin.com/posts/activity-7343153963732520961-iIhT?utm_source=share&utm_medium=member_desktop&rcm=ACoAADlbbqwBURy054KT61oIoiRTs9E8dRHE3zE', '_blank')">
+    <div class="volunteer-card">
       <div class="thumbnail">
         <img src="images\ahmedabad acd.png" alt="ACD Ahmedabad">
-        <div class="redirect-arrow">↗</div>
       </div>
       <div class="card-content">
         <div class="volunteer-meta">AWS Cloud Club Captain • 2025</div>
         <h3><a href="https://www.linkedin.com/posts/activity-7343153963732520961-iIhT?utm_source=share&utm_medium=member_desktop&rcm=ACoAADlbbqwBURy054KT61oIoiRTs9E8dRHE3zE" target="_blank">AWS Community Day Ahmedabad - Data Analytics Edition 2025</a></h3>
         <p>I shared a stage with fellow AWS Cloud Club Captains at AWS Community Day Ahmedabad - Data Analytics Edition 2025.</p>
+        <div class="redirect-arrow" onclick="window.open('https://www.linkedin.com/posts/activity-7343153963732520961-iIhT?utm_source=share&utm_medium=member_desktop&rcm=ACoAADlbbqwBURy054KT61oIoiRTs9E8dRHE3zE', '_blank')">↗</div>
       </div>
     </div>
 
-    <div class="volunteer-card" onclick="window.open('https://www.linkedin.com/posts/activity-7300950921520328704-uuwb?utm_source=share&utm_medium=member_desktop&rcm=ACoAADlbbqwBURy054KT61oIoiRTs9E8dRHE3zE', '_blank')">
+    <div class="volunteer-card">
       <div class="thumbnail">
         <img src="images/gen ai workshop.jpg" alt="For The Students, By The Students">
-        <div class="redirect-arrow">↗</div>
       </div>
       <div class="card-content">
         <div class="volunteer-meta">AWS Cloud Club Captain • 2025</div>
         <h3><a href="https://www.linkedin.com/posts/activity-7300950921520328704-uuwb?utm_source=share&utm_medium=member_desktop&rcm=ACoAADlbbqwBURy054KT61oIoiRTs9E8dRHE3zE" target="_blank">For The Students, By The Students - initiave launched</a></h3>
         <p>To address the experts scarcity in rural areas and not to stop for it, I launched the "For The Students, By The Students" initiative. Here, I mold myself into various roles like, a captain (organizer), planner, volunteer, advisor, a speaker and most importantly, a learner (student). Built a peer-led learning with a theme "From Rural To Global with AWS".</p>
+        <div class="redirect-arrow" onclick="window.open('https://www.linkedin.com/posts/activity-7300950921520328704-uuwb?utm_source=share&utm_medium=member_desktop&rcm=ACoAADlbbqwBURy054KT61oIoiRTs9E8dRHE3zE', '_blank')">↗</div>
       </div>
     </div>
 
-    <div class="volunteer-card" onclick="window.open('https://www.linkedin.com/posts/activity-7235971091830034432-Sd0J?utm_source=share&utm_medium=member_desktop&rcm=ACoAADlbbqwBURy054KT61oIoiRTs9E8dRHE3zE', '_blank')">
+    <div class="volunteer-card">
       <div class="thumbnail">
         <img src="images\c&d sessions.jpg" alt="Cloud & DevOps sessions">
-        <div class="redirect-arrow">↗</div>
       </div>
       <div class="card-content">
         <div class="volunteer-meta">AWS Cloud Club Captain • 2024</div>
         <h3><a href="https://www.linkedin.com/posts/activity-7235971091830034432-Sd0J?utm_source=share&utm_medium=member_desktop&rcm=ACoAADlbbqwBURy054KT61oIoiRTs9E8dRHE3zE" target="_blank">AWS Cloud & DevOps Sessions</a></h3>
         <p>I coordinated weekend series of sessions on Cloud & DevOps, delivered by an AWS Employee, to enable technical exposure to rural students.</p>
+        <div class="redirect-arrow" onclick="window.open('https://www.linkedin.com/posts/activity-7235971091830034432-Sd0J?utm_source=share&utm_medium=member_desktop&rcm=ACoAADlbbqwBURy054KT61oIoiRTs9E8dRHE3zE', '_blank')">↗</div>
       </div>
     </div>
 
-    <div class="volunteer-card" onclick="window.open('https://www.linkedin.com/posts/activity-7227497232986427392-A0AO?utm_source=share&utm_medium=member_desktop&rcm=ACoAADlbbqwBURy054KT61oIoiRTs9E8dRHE3zE', '_blank')">
+    <div class="volunteer-card">
       <div class="thumbnail">
         <img src="images\aws power hr.png" alt="AWS Power Hour of Cloud Camp">
-        <div class="redirect-arrow">↗</div>
       </div>
       <div class="card-content">
         <div class="volunteer-meta">AWS Cloud Club Captain • 2024</div>
         <h3><a href="https://www.linkedin.com/posts/activity-7227497232986427392-A0AO?utm_source=share&utm_medium=member_desktop&rcm=ACoAADlbbqwBURy054KT61oIoiRTs9E8dRHE3zE" target="_blank">AWS Power Hour of Cloud Camps</a></h3>
         <p>I organized, "AWS Power Hour of Cloud Camp" - a weekend series by different AWS Experts and employees on topics including Infrastructure, Containers, and Artificial Intelligence with AWS in collaboration with AWS Cloud Club at IIPS.</p>
+        <div class="redirect-arrow" onclick="window.open('https://www.linkedin.com/posts/activity-7227497232986427392-A0AO?utm_source=share&utm_medium=member_desktop&rcm=ACoAADlbbqwBURy054KT61oIoiRTs9E8dRHE3zE', '_blank')">↗</div>
       </div>
     </div>
 
-    <div class="volunteer-card" onclick="window.open('https://www.linkedin.com/posts/activity-7190069235430092800-tceI?utm_source=share&utm_medium=member_desktop&rcm=ACoAADlbbqwBURy054KT61oIoiRTs9E8dRHE3zE', '_blank')">
+    <div class="volunteer-card">
       <div class="thumbnail">
         <img src="images\inagural.png" alt="Inagural cloud clubs">
-        <div class="redirect-arrow">↗</div>
       </div>
       <div class="card-content">
         <div class="volunteer-meta">AWS Cloud Club Captain • 2024</div>
         <h3><a href="https://www.linkedin.com/posts/activity-7190069235430092800-tceI?utm_source=share&utm_medium=member_desktop&rcm=ACoAADlbbqwBURy054KT61oIoiRTs9E8dRHE3zE" target="_blank">AWS Cloud Clubs Establishment</a></h3>
         <p>I initiated and inaugurated the first AWS Cloud Club of Ahilyanagar, India, at sanjivani college of engineering with a successful conduction of a hybrid event.</p>
+        <div class="redirect-arrow" onclick="window.open('https://www.linkedin.com/posts/activity-7190069235430092800-tceI?utm_source=share&utm_medium=member_desktop&rcm=ACoAADlbbqwBURy054KT61oIoiRTs9E8dRHE3zE', '_blank')">↗</div>
       </div>
     </div>
 
@@ -843,6 +1080,41 @@
       localStorage.setItem('theme', 'light');
     }
   }
+
+  // Mobile Menu Functions
+  function toggleMobileMenu() {
+    const hamburger = document.querySelector('.hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+    
+    hamburger.classList.toggle('active');
+    mobileNav.classList.toggle('active');
+    
+    // Prevent body scroll when menu is open
+    if (mobileNav.classList.contains('active')) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  }
+
+  function closeMobileMenu() {
+    const hamburger = document.querySelector('.hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+    
+    hamburger.classList.remove('active');
+    mobileNav.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  // Close mobile menu when clicking outside
+  document.addEventListener('click', function(event) {
+    const hamburger = document.querySelector('.hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+    
+    if (!hamburger.contains(event.target) && !mobileNav.contains(event.target)) {
+      closeMobileMenu();
+    }
+  });
 </script>
 
 </body>
